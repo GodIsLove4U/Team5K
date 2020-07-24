@@ -1,18 +1,14 @@
 # Team5K
 
-What are we hoping to achieve?
-    * Understand how political campaign donations function and evolve in the midst of economic and social crises
-    * By visualizing how crises between 2000 and 2020 (financial crisis, dotcom bubble, COVID19) have impacted donations, we want to understand trends over time in voting
-    * In particular, we want to establish the effect of crises on the campaign donation activity in battleground states 
-    * As a bonus activity, we would like to: 
-      * Create a real-time dashboard to track how campaign donations are evolving during the ongoing COVID19 pandemic
-      * Assess campaign donations data for the same crises in historically ‘blue’ (California, New York, Maine) and ‘red’ (Texas, Mississippi, Alabama) states to establish a baseline and see whether constituents of these states reconsider their donations to presidential campaigns during times of crisis
+We plan on understanding how political campaign donations function and evolve in the midst of economic and social crises. By visualizing how crises between 2000 and 2020 (financial crisis, dotcom bubble, COVID19) have impacted donations, we want to understand trends over time in donations and how battleground states swing between red and blue. In particular, we want to establish the effect of crises on the campaign donation activity in battleground states. As a bonus activity, we would like to: 
+* Create a real-time dashboard to track how campaign donations are evolving during the ongoing COVID19 pandemic
+* Assess campaign donations data for the same crises in historically ‘blue’ (California, New York, Maine) and ‘red’ (Texas, Mississippi, Alabama) states to establish a baseline and see whether constituents of these states reconsider their donations to presidential campaigns during times of crisis
+
 What are the steps we are taking to achieve this?
-    * Methodology
-      * We will look at county level data in 6 battleground states (Arizona, North Carolina, Michigan, Florida, Wisconsin, Pennsylvania) between the years 2000-2020
-      * To filter the data by  ‘blue’ and ‘red’, we will pick 50 prominent democrats and republicans in each state to, showing whether people switched “sides” during an election year in reaction to a major crisis event
-      * We will create an additional predictive model for COVID19 by first analyzing county data in Florida (we choose Florida because it will offer the greatest number of data points), and expand the methodology to other states in case we are successful
-      * Our approach will be to understand the nuances of campaign donations and major crises in the US (segment 1), clean and normalize the raw data in a number of databases (segment 2), load the data into databases and perform statistical and predictive analyses (segment 3) and create visualizations and dashboards to upload to a webpage (segment 4)
+* We will look at county level data in 6 battleground states (Arizona, North Carolina, Michigan, Florida, Wisconsin, Pennsylvania) between the years 2000-2020
+* To filter the data by  ‘blue’ and ‘red’, we will pick 50 prominent democrats and republicans in each state to, showing whether people switched “sides” during an election year in reaction to a major crisis event
+* We will create an additional predictive model for COVID19 by first analyzing county data in Florida (we choose Florida because it will offer the greatest number of data points), and expand the methodology to other states in case we are successful
+* Our approach will be to understand the nuances of campaign donations and major crises in the US (segment 1), clean and normalize the raw data in a number of databases (segment 2), load the data into databases and perform statistical and predictive analyses (segment 3) and create visualizations and dashboards to upload to a webpage (segment 4)
 
 ## Idea
 Goal: Use democratic and republican donations data to assess whether major economic and social events in the United States impact donations to presidential campaigns. Some questions/pieces of data we will assess include:
