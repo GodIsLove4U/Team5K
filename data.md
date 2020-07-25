@@ -9,10 +9,10 @@ Server is 34.67.52.115
 Database is team5k
 
 Everyone should have a read user name 
-doris
-josh
-kanika
-paul
+-doris
+-josh
+-kanika
+-paul
 
 User name and Password are the same
 
