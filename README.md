@@ -44,6 +44,7 @@ Goal: Use democratic and republican donations data to assess whether major econo
 
 ## Technology
 * Project Management: Coda.io
+* Communication Protocols: Slack, Zoom (6-8 hours weekly), Class session brekouts
 * Tools: Jupyter Notebook, Git
 * Frontend: Tableau, JavaScript, HTML5, CSS3, Angular, 
 * Backend: S3, PostgreSQL, 
