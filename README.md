@@ -2,6 +2,7 @@ We plan on understanding how political campaign donations function and evolve in
 * Create a real-time dashboard to track how campaign donations are evolving during the ongoing COVID19 pandemic
 * Assess campaign donations data for the same crises in historically ‘blue’ (California, New York, Maine) and ‘red’ (Texas, Mississippi, Alabama) states to establish a baseline and see whether constituents of these states reconsider their donations to presidential campaigns during times of crisis
 
+
 What are the steps we are taking to achieve this?
 * We will look at county level data in 6 battleground states (Arizona, North Carolina, Michigan, Florida, Wisconsin, Pennsylvania) between the years 2000-2020
 * To filter the data by  ‘blue’ and ‘red’, we will pick 50 prominent democrats and republicans in each state to, showing whether people switched “sides” during an election year in reaction to a major crisis event
