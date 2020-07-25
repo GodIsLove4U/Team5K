@@ -29,6 +29,7 @@ Goal: Use democratic and republican donations data to assess whether major econo
 * Team has committed to ongoing communication via Slack & Coda
 * We have a standing Zoom session from 4-5PM on weekdays, 10AM Saturdays, 12:30PM Sundays
 * Team communicates regularly during Tuesday/Thursday breakout sessions
+* Every member of the team has their own branch, listed as their first name (Kanika, Paul, Josh, Doris). In addition, we have a branch to store data files (data_storage) and the master branch. 
 
 ## Source Data
 * Battleground States (6) Dataset per state 2000-2020 all donations
