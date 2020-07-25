@@ -25,6 +25,11 @@ Goal: Use democratic and republican donations data to assess whether major econo
 * How does donor behavior differ between COVID crisis vs other crises?
 * Have other major recession events impacted how much/how frequently/whether people choose to donate to presidential campaigns?
 
+## Communication Protocols
+* Team has committed to ongoing communication via Slack & Coda
+* We have a standing Zoom session from 4-5PM on weekdays, 10AM Saturdays, 12:30PM Sundays
+* Team communicates regularly during Tuesday/Thursday breakout sessions
+
 ## Source Data
 * Battleground States (6) Dataset per state 2000-2020 all donations
   * FL: 3978651
@@ -44,7 +49,7 @@ Goal: Use democratic and republican donations data to assess whether major econo
 
 ## Technology
 * Project Management: Coda.io
-* Communication Protocols: Slack, Zoom (6-8 hours weekly), Class session brekouts
+* Communication Protocols: Slack, Zoom (6-8 hours weekly), Class session breakouts
 * Tools: Jupyter Notebook, Git
 * Frontend: Tableau, JavaScript, HTML5, CSS3, Angular, 
 * Backend: S3, PostgreSQL, 
