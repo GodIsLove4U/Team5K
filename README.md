@@ -1,3 +1,5 @@
+# Team5K
+
 We plan on understanding how political campaign donations function and evolve in the midst of economic and social crises. By visualizing how crises between 2000 and 2020 (financial crisis, dotcom bubble, COVID19) have impacted donations, we want to understand trends over time in donations and how battleground states swing between red and blue. In particular, we want to establish the effect of crises on the campaign donation activity in battleground states. As a bonus activity, we would like to: 
 * Create a real-time dashboard to track how campaign donations are evolving during the ongoing COVID19 pandemic
 * Assess campaign donations data for the same crises in historically ‘blue’ (California, New York, Maine) and ‘red’ (Texas, Mississippi, Alabama) states to establish a baseline and see whether constituents of these states reconsider their donations to presidential campaigns during times of crisis
