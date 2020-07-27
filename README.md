@@ -1,8 +1,8 @@
 # Team5K
-1. I. Introduction
+1. Introduction
   * Our main goal is to analyze the predictive power of political donations on presidential election outcomes in key battleground states in the United States. We will build predictive models using machine learning to understand how donations to political campaigns inform voting in counties and states. We will also look at times of economic and social crises and how it may impact and shift the parties to which voters choose to donate.
   * We found that this topic could have impactful predictive power in understanding how times of crises can influence the outcomes of presidential elections. The state of the pandemic in the US paired with civil unrest throughout the country pose a dynamic background for the upcoming presidential elections. As active citizens, our group is invested in evaluating how events similar in magnitude have created shifts in political affiliation.
-2. II. Dataset Overview
+2. Dataset Overview
   * For our analysis, we are using publicly available datasets that evaluate the following features:
     * Crises
       * 2000: Dotcom Bubble Burst
@@ -34,7 +34,7 @@
     * Committee Name, Party Affiliation, Committee ID Table Mapping
     * Zipcode to County Table Mapping
     * Data on Democratic and Republican candidates in battleground states (top congressional or gubernatorial candidates in each battleground state)
-3. III. Methodology and Approach
+3. Methodology and Approach
   * By visualizing how crises between 2000 and 2020 (dotcom bubble, financial crisis, COVID19) have impacted campaign donations, we want to provide training data for our model in order to predict how political affiliations in battleground states (Arizona, Michigan, Pennsylvania, Florida, Wisconsin, North Carolina) swing between red and blue.
   * We will look at county level data in 6 battleground states between the years 2000-2020, and segment based on various demographic features to build a predictive model that indicates how constituents will choose to vote in this cycle of the presidential election.
   * To filter the data by ‘blue’ and ‘red’, we will pick prominent democrats and republicans in each state, showing whether people switches ‘sides’ during an election year in reaction to a major crisis event.
@@ -47,12 +47,12 @@
     * Is there a significant transfer of donations from the republican party to democratic during times of crisis or vice versa?
     * How do demographics (age, ethnicity, geographical delineations, employment status, employment, education, and party affiliation) in each county play into how constituents engage with donations?
     * Do these demographics have predictive power in presidential elections?
-4. IV. Communication Protocols
+4. Communication Protocols
   * Our team has committed to ongoing communication via Slack and Coda.
   * We participate in standing Zoom sessions from 4-5PM on weekdays, 10am Saturdays, 12:30pm Sundays
   * Our team communicates regularly, and uses Tuesday/Thursday breakout sessions to refine our machine learning model, ensure our database is correctly set-up, and review changes and commits to GitHub.
   * Each member of the team has their own branch listed under their respective first names. In addition, we have a branch to store data files (data_storage) along with the master branch.
-5. V. Technology Stack
+5. Technology Stack
   * Our team is using the following tools to successfully collaborate and build our machine learning model:
     * Project Management: Coda.io
     * Tools: Jupyter Notebook, Git
