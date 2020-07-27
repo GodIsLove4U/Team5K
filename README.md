@@ -41,6 +41,7 @@ Battleground States (6) Dataset per state 2000-2020 all donations
  * NC: 1645075
  * MI: 2107941
  * PA: 3156260
+ 
 * Campaign donations data during the dotcom bubble burst and the period after (early 2000s data)
 * Campaign donations data during the financial crisis and the period after (2008-2016 data)
 * Campaign donations data prior to and during COVID19 (2016-2020 data)
