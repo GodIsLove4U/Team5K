@@ -58,7 +58,7 @@
 
 ## Technology Stack
   * Our team is using the following tools to successfully collaborate and build our machine learning model:
-    * Project Management: Coda.io
+    * Project Management: [Coda.io](http://coda.io)
     * Tools: Jupyter Notebook, Git
     * Frontend: Tableau, JavaScript, HTML5, CSS3, Angular, 
     * Backend: S3, PostgreSQL, BigQuery
