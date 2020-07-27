@@ -6,24 +6,24 @@
 ## Dataset Overview
 * For our analysis, we are using publicly available datasets that evaluate the following features:
    * Crises
-    * 2000: Dotcom Bubble Burst
-    * 2001: 9/11
-    * 2006-2008: Housing Bubble
-    * 2007-2008: Financial Crisis
-    * 2020: COVID19
+     * 2000: Dotcom Bubble Burst
+     * 2001: 9/11
+     * 2006-2008: Housing Bubble
+     * 2007-2008: Financial Crisis
+     * 2020: COVID19
    * Demographics
-    * Urban/rural
-    * Average age
-    * Education
-    * County (trends within counties themselves)
-    * Ethnicity
+     * Urban/rural
+     * Average age
+     * Education
+     * County (trends within counties themselves)
+     * Ethnicity
    * Unemployment data
-    * year
-    * month
-    * season
+     * year
+     * month
+     * season
    * Donations
-    * How are voting habits are affected?
-    * Filter out years to build a model to predict how counties in the 6 states will perform
+     * How are voting habits are affected?
+     * Filter out years to build a model to predict how counties in the 6 states will perform
    * Party Classifiers: Democrat or Republican
 * Our datasets include:
    * Campaign donations data during the dotcom bubble burst and the period prior (early 2000s data).
