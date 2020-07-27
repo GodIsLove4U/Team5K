@@ -4,37 +4,37 @@
   * We found that this topic could have impactful predictive power in understanding how times of crises can influence the outcomes of presidential elections. The state of the pandemic in the US paired with civil unrest throughout the country pose a dynamic background for the upcoming presidential elections. As active citizens, our group is invested in evaluating how events similar in magnitude have created shifts in political affiliation.
 
 ## Dataset Overview
-  * For our analysis, we are using publicly available datasets that evaluate the following features:
-    * Crises
+* For our analysis, we are using publicly available datasets that evaluate the following features:
+   * Crises
      * 2000: Dotcom Bubble Burst
      * 2001: 9/11
      * 2006-2008: Housing Bubble
      * 2007-2008: Financial Crisis
      * 2020: COVID19
-    * Demographics
+   * Demographics
      * Urban/rural
      * Average age
      * Education
      * County (trends within counties themselves)
      * Ethnicity
-    * Unemployment data
+   * Unemployment data
      * year
      * month
      * season
-    * Donations
+   * Donations
      * How are voting habits are affected?
      * Filter out years to build a model to predict how counties in the 6 states will perform
-    * Party Classifiers: Democrat or Republican
-  * Our datasets include:
-    * Campaign donations data during the dotcom bubble burst and the period prior (early 2000s data).
-    * Campaign donations data during the financial crisis and the period after (2008-2016 data).
-    * Campaign donations data prior to and during COVID19 (2016-2020 data).
-    * Campaign donations aggregated in four year chunks (2000, 2004, 2008, 2012, 2016 and 2020). This will allow us to build a predictive model to determine how the county aggregate sum of each four year period impacts the number of actual votes received in the election year per county.
-    * COVID19 county-level infection data
-    * County zipcodes
-    * Committee Name, Party Affiliation, Committee ID Table Mapping
-    * Zipcode to County Table Mapping
-    * Data on Democratic and Republican candidates in battleground states (top congressional or gubernatorial candidates in each battleground state)
+   * Party Classifiers: Democrat or Republican
+* Our datasets include:
+   * Campaign donations data during the dotcom bubble burst and the period prior (early 2000s data).
+   * Campaign donations data during the financial crisis and the period after (2008-2016 data).
+   * Campaign donations data prior to and during COVID19 (2016-2020 data).
+   * Campaign donations aggregated in four year chunks (2000, 2004, 2008, 2012, 2016 and 2020). This will allow us to build a predictive model to determine how the county aggregate sum of each four year period impacts the number of actual votes received in the election year per county.
+   * COVID19 county-level infection data
+   * County zipcodes
+   * Committee Name, Party Affiliation, Committee ID Table Mapping
+   * Zipcode to County Table Mapping
+   * Data on Democratic and Republican candidates in battleground states (top congressional or gubernatorial candidates in each battleground state)
     
 ## Methodology and Approach
   * By visualizing how crises between 2000 and 2020 (dotcom bubble, financial crisis, COVID19) have impacted campaign donations, we want to provide training data for our model in order to predict how political affiliations in battleground states (Arizona, Michigan, Pennsylvania, Florida, Wisconsin, North Carolina) swing between red and blue.
@@ -51,14 +51,15 @@
     * Do these demographics have predictive power in presidential elections?
 
 ## Communication Protocols
-  * Our team has committed to ongoing communication via Slack and Coda.
+
+  * Our team has committed to ongoing communication via Slack and [Coda](http://coda.io).
   * We participate in standing Zoom sessions from 4-5PM on weekdays, 10am Saturdays, 12:30pm Sundays
   * Our team communicates regularly, and uses Tuesday/Thursday breakout sessions to refine our machine learning model, ensure our database is correctly set-up, and review changes and commits to GitHub.
   * Each member of the team has their own branch listed under their respective first names. In addition, we have a branch to store data files (data_storage) along with the master branch.
 
 ## Technology Stack
   * Our team is using the following tools to successfully collaborate and build our machine learning model:
-    * Project Management: Coda.io
+    * Project Management: [Coda.io](http://coda.io)
     * Tools: Jupyter Notebook, Git
     * Frontend: Tableau, JavaScript, HTML5, CSS3, Angular, 
     * Backend: S3, PostgreSQL, BigQuery
