@@ -34,7 +34,7 @@ Goal: Use democratic and republican donations data to assess whether major econo
 * Every member of the team has their own branch, listed as their first name (Kanika, Paul, Josh, Doris). In addition, we have a branch to store data files (data_storage) and the master branch. 
 
 ## Source Data
-* Battleground States (6) Dataset per state 2000-2020 all donations
+Battleground States (6) Dataset per state 2000-2020 all donations
  * FL: 3978651
  * AZ: 1614510
  * WI: 1156782
