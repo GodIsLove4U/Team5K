@@ -13,3 +13,16 @@ TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
 VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year"]
 DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year"]    
+
+# Configure settings for RDS
+# Defining db info in config var
+jdbc_url="jdbc:postgresql://34.67.52.115/team5k"
+CONFIG = {'user': 'postgres', 
+          "password": "team5kteam5k", 
+          "driver":"org.postgresql.Driver",
+          "location": "34.67.52.115",
+          "db": "team5k",
+          "port": "5432"}
+
+#postgres://[user]:[password]@[location]:[port]/[database]
+CREATE_ENGINE_STR = 'postgresql://' + CONFIG["user"] + ":" + CONFIG["password"] + "@" + CONFIG["location"] + ":" + CONFIG["port"] + "/" + CONFIG["db"]
