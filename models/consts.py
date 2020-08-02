@@ -11,7 +11,7 @@ MAJOR_PARTIES = ["democrat", "republican"]
 SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
 TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
-VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year"]
+VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural"]
 DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year"]    
 
 # Configure settings for RDS
