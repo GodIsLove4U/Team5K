@@ -22,8 +22,7 @@ SML_TEST_SIZE = 0.25
 
 #The start/end election years to run analysis
 ELECTION_STARTING_YR = 2000
-#ELECTION_ENDING_YR = 2020
-ELECTION_ENDING_YR = 2003
+ELECTION_ENDING_YR = 2020
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
