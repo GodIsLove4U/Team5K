@@ -26,15 +26,15 @@ ELECTION_ENDING_YR = 2020
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
-MAJOR_PARTIES = ["democrat", "republican"]
+MAJOR_PARTIES = ["democrat", "republican", "other"]
 #List of swing states to run the analysis on
 SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
 #Column Names
-VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural"]
-DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "percent_blue", "percent_red", "percent_other", "county", "state", "election_year"]    
+VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural", "winning_party"]
+DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "blue_num", "red_num", "other_num", "total_num", "county", "state", "election_year"]    
 
 # Configure settings for RDS
 # Defining db info in config var
