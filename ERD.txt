@@ -1,0 +1,674 @@
+candidates
+--
+"CAND_ID" text
+"CAND_NAME" text 
+"CAND_PTY_AFFILIATION" text 
+"CAND_ELECTION_YR" text 
+"CAND_OFFICE_ST" text 
+"CAND_OFFICE" text 
+"CAND_OFFICE_DISTRICT" text 
+"CMTE_ZIP" text 
+"CMTE_DSGN" text 
+"CAND_ICI" text 
+"CAND_STATUS" text 
+"CAND_PCC" text 
+"CAND_ST1" text 
+"CAND_ST2" text 
+"CAND_CITY" text 
+"CAND_ST" text 
+"CAND_ZIP" text 
+
+committees
+--
+"CMTE_ID" text 
+"CMTE_NM" text 
+"TRES_NM" text 
+"CMTE_ST1" text 
+"CMTE_ST2" text 
+"CMTE_CITY" text 
+"CMTE_ST" text 
+"CMTE_ZIP" text 
+"CMTE_DSGN" text 
+"CMTE_TP" text 
+"CMTE_PTY_AFFILIATION" text 
+"CMTE_FILING_FREQ" text 
+"ORG_TP" text 
+"CONNECTED_ORG_NM" text 
+"CAND_ID" text FK >- candidates.CAND_ID
+
+donations
+--
+"CMTE_ID" text FK >- committees.CMTE_ID
+"AMNDT_IND" text
+"RPT_TP" text
+"TRANSACTION_PGI" text
+"IMAGE_NUM" text
+"TRANSACTION_TP" text
+"ENTITY_TP" text
+"NAME" text
+"CITY" text
+"STATE" text
+"ZIP" text FK >- postal_codes.zip
+"EMPLOYER" text
+"OCCUPATION" text
+"TRANSACTION_DT" text
+"TRANSACTION_AMT" integer,
+"OTHER_ID" text
+"TRAN_ID" text
+"FILE_NUM" text
+"MEMO_CD" text
+"MEMO_TEXT" text
+"SUB_ID" text
+
+education
+--
+"FIPS Code" integer FK >- postal_codes.stcountyfp
+"State"
+"Area name"
+"2003 Rural-urban Continuum Code" double 
+"2003 Urban Influence Code" double 
+"2013 Rural-urban Continuum Code" double 
+"2013 Urban Influence Code" double 
+"Less than a high school diploma 1970" double 
+"High school diploma only 1970" double 
+"Some college (1-3 years) 1970" double 
+"Four years of college or higher 1970" double 
+"Percent of adults with less than a high school diploma 1970" double 
+"Percent of adults with a high school diploma only 1970" double 
+"Percent of adults completing some college (1-3 years) 1970" double 
+"Percent of adults completing college or higher 1970" double 
+"Less than a high school diploma 1980" double 
+"High school diploma only 1980" double 
+"Some college (1-3 years) 1980" double 
+"Four years of college or higher 1980" double 
+"Percent of adults with less than a high school diploma 1980" double 
+"Percent of adults with a high school diploma only 1980" double 
+"Percent of adults completing some college (1-3 years) 1980" double 
+"Percent of adults completing college or higher 1980" double 
+"Less than a high school diploma 1990" double 
+"High school diploma only 1990" double 
+"Some college or associate's degree 1990" double 
+"Bachelor's degree or higher 1990" double 
+"Percent of adults with less than a high school diploma 1990" double 
+"Percent of adults with a high school diploma only 1990" double 
+"Percent of adults completing some college 1990" double 
+"Percent of adults with a bachelor's degree or higher 1990" double 
+"Less than a high school diploma 2000" double 
+"High school diploma only 2000" double 
+"Some college or associate's degree 2000" double 
+"Bachelor's degree or higher 2000" double 
+"Percent of adults with less than a high school diploma 2000" double 
+"Percent of adults with a high school diploma only 2000" double 
+"Percent of adults completing some college 2000" double 
+"Percent of adults with a bachelor's degree or higher 2000" double 
+"Less than a high school diploma 2014-18" double 
+"High school diploma only 2014-18" double 
+"Some college or associate's degree 2014-18" double 
+"Bachelor's degree or higher 2014-18" double 
+"Percent of adults with less than a high school diploma 2014-18" double 
+"Percent of adults with a high school diploma only 2014-18" double 
+"Percent of adults completing some college 2014-18" double 
+"Percent of adults with a bachelor's degree or higher 2014-18" double 
+
+postal_codes
+--
+zip integer, 
+county text
+state text
+stcountyfp integer 
+classfp text
+
+unemployment
+--
+fips integer, FK >- postal_codes.stcountyfp
+state text
+county text
+num_deaths integer,
+years_of_potential_life_lost_rate double
+"95percent_ci_low" double
+"95percent_ci_high" double
+quartile integer,
+ypll_rate_aian double
+ypll_rate_aian_95percent_ci_low double
+ypll_rate_aian_95percent_ci_high double
+ypll_rate_asian double
+ypll_rate_asian_95percent_ci_low double
+ypll_rate_asian_95percent_ci_high double
+ypll_rate_black double
+ypll_rate_black_95percent_ci_low double
+ypll_rate_black_95percent_ci_high double
+ypll_rate_hispanic double
+ypll_rate_hispanic_95percent_ci_low double
+ypll_rate_hispanic_95percent_ci_high double
+ypll_rate_white double
+ypll_rate_white_95percent_ci_low double
+ypll_rate_white_95percent_ci_high double
+percent_fair_or_poor_health double
+"95percent_ci_low_2" double
+"95percent_ci_high_2" double
+quartile_2 integer,
+average_number_of_physically_unhealthy_days double
+"95percent_ci_low_3" double
+"95percent_ci_high_3" double
+quartile_3 integer,
+average_number_of_mentally_unhealthy_days double
+"95percent_ci_low_4" double
+"95percent_ci_high_4" double
+quartile_4 integer,
+unreliable text
+percent_low_birthweight double
+"95percent_ci_low_5" double
+"95percent_ci_high_5" double
+quartile_5 integer,
+percent_lbw_aian double
+percent_lbw_aian_95percent_ci_low integer,
+percent_lbw_aian_95percent_ci_high double
+percent_lbw_asian double
+percent_lbw_asian_95percent_ci_low double
+percent_lbw_asian_95percent_ci_high double
+percent_lbw_black double
+percent_lbw_black_95percent_ci_low double
+percent_lbw_black_95percent_ci_high double
+percent_lbw_hispanic double
+percent_lbw_hispanic_95percent_ci_low double
+percent_lbw_hispanic_95percent_ci_high double
+percent_lbw_white double
+percent_lbw_white_95percent_ci_low double
+percent_lbw_white_95percent_ci_high double
+percent_smokers double
+"95percent_ci_low_6" double
+"95percent_ci_high_6" double
+quartile_6 integer,
+percent_adults_with_obesity double
+"95percent_ci_low_7" double
+"95percent_ci_high_7" double
+quartile_7 integer,
+food_environment_index double
+quartile_8 integer,
+percent_physically_inactive double
+"95percent_ci_low_8" double
+"95percent_ci_high_8" double
+quartile_9 integer,
+percent_with_access_to_exercise_opportunities double
+quartile_10 integer,
+percent_excessive_drinking double
+"95percent_ci_low_9" double
+"95percent_ci_high_9" double
+quartile_11 integer,
+num_alcohol_impaired_driving_deaths integer,
+num_driving_deaths integer,
+percent_driving_deaths_with_alcohol_involvement double
+"95percent_ci_low_10" double
+"95percent_ci_high_10" double
+quartile_12 integer,
+num_chlamydia_cases integer,
+chlamydia_rate double
+quartile_13 integer,
+teen_birth_rate double
+"95percent_ci_low_11" double
+"95percent_ci_high_11" double
+quartile_14 integer,
+teen_birth_rate_aian double
+teen_birth_rate_aian_95percent_ci_low double
+teen_birth_rate_aian_95percent_ci_high double
+teen_birth_rate_asian double
+teen_birth_rate_asian_95percent_ci_low double
+teen_birth_rate_asian_95percent_ci_high double
+teen_birth_rate_black double
+teen_birth_rate_black_95percent_ci_low double
+teen_birth_rate_black_95percent_ci_high double
+teen_birth_rate_hispanic double
+teen_birth_rate_hispanic_95percent_ci_low double
+teen_birth_rate_hispanic_95percent_ci_high double
+teen_birth_rate_white double
+teen_birth_rate_white_95percent_ci_low double
+teen_birth_rate_white_95percent_ci_high double
+num_uninsured integer,
+percent_uninsured double
+"95percent_ci_low_12" double
+"95percent_ci_high_12" double
+quartile_15 integer,
+num_primary_care_physicians integer,
+primary_care_physicians_rate double
+primary_care_physicians_ratio text
+quartile_16 integer,
+num_dentists integer,
+dentist_rate double
+dentist_ratio text
+quartile_17 integer,
+num_mental_health_providers integer,
+mental_health_provider_rate double
+mental_health_provider_ratio text
+quartile_18 integer,
+preventable_hospitalization_rate integer,
+quartile_19 integer,
+preventable_hosp_rate_aian integer,
+preventable_hosp_rate_asian integer,
+preventable_hosp_rate_black integer,
+preventable_hosp_rate_hispanic integer,
+preventable_hosp_rate_white integer,
+percent_with_annual_mammogram integer,
+quartile_20 integer,
+percent_screened_aian integer,
+percent_screened_asian integer,
+percent_screened_black integer,
+percent_screened_hispanic integer,
+percent_screened_white integer,
+percent_vaccinated integer,
+quartile_21 integer,
+percent_vaccinated_aian integer,
+percent_vaccinated_asian integer,
+percent_vaccinated_black integer,
+percent_vaccinated_hispanic integer,
+percent_vaccinated_white integer,
+cohort_size integer,
+high_school_graduation_rate double
+quartile_22 integer,
+num_some_college integer,
+population integer,
+percent_some_college double
+"95percent_ci_low_13" double
+"95percent_ci_high_13" double
+quartile_23 integer,
+num_unemployed integer,
+labor_force integer,
+percent_unemployed double
+quartile_24 integer,
+percent_children_in_poverty double
+"95percent_ci_low_14" double
+"95percent_ci_high_14" double
+quartile_25 integer,
+percent_children_in_poverty_aian double
+percent_children_in_poverty_asian double
+percent_children_in_poverty_black double
+percent_children_in_poverty_hispanic double
+percent_children_in_poverty_white double
+"80th_percentile_income" integer,
+"20th_percentile_income" integer,
+income_ratio double
+quartile_26 integer,
+num_single_parent_households integer,
+num_households integer,
+percent_single_parent_households double
+"95percent_ci_low_15" double
+"95percent_ci_high_15" double
+quartile_27 integer,
+num_associations integer,
+social_association_rate double
+quartile_28 integer,
+annual_average_violent_crimes double
+violent_crime_rate double
+quartile_29 integer,
+num_injury_deaths integer,
+injury_death_rate double
+"95percent_ci_low_16" double
+"95percent_ci_high_16" double
+quartile_30 integer,
+injury_death_rate_aian double
+injury_death_rate_aian_95percent_ci_low double
+injury_death_rate_aian_95percent_ci_high double
+injury_death_rate_asian double
+injury_death_rate_asian_95percent_ci_low double
+injury_death_rate_asian_95percent_ci_high double
+injury_death_rate_black double
+injury_death_rate_black_95percent_ci_low double
+injury_death_rate_black_95percent_ci_high double
+injury_death_rate_hispanic double
+injury_death_rate_hispanic_95percent_ci_low double
+injury_death_rate_hispanic_95percent_ci_high double
+injury_death_rate_white double
+injury_death_rate_white_95percent_ci_low double
+injury_death_rate_white_95percent_ci_high double
+average_daily_pm2_5 double
+quartile_31 integer,
+presence_of_water_violation text
+quartile_32 integer,
+percent_severe_housing_problems double
+"95percent_ci_low_17" double
+"95percent_ci_high_17" double
+severe_housing_cost_burden double
+severe_housing_cost_burden_95percent_ci_low double
+severe_housing_cost_burden_95percent_ci_high double
+overcrowding double
+overcrowding_95percent_ci_low double
+overcrowding_95percent_ci_high double
+inadequate_facilities double
+inadequate_facilities_95percent_ci_low double
+inadequate_facilities_95percent_ci_high double
+quartile_33 integer,
+percent_drive_alone_to_work double
+"95percent_ci_low_18" double
+"95percent_ci_high_18" double
+quartile_34 integer,
+percent_drive_alone_aian double
+percent_drive_alone_aian_95percent_ci_low double
+percent_drive_alone_aian_95percent_ci_high double
+percent_drive_alone_asian double
+percent_drive_alone_asian_95percent_ci_low double
+percent_drive_alone_asian_95percent_ci_high double
+percent_drive_alone_black double
+percent_drive_alone_black_95percent_ci_low double
+percent_drive_alone_black_95percent_ci_high double
+percent_drive_alone_hispanic double
+percent_drive_alone_hispanic_95percent_ci_low double
+percent_drive_alone_hispanic_95percent_ci_high double
+percent_drive_alone_white double
+percent_drive_alone_white_95percent_ci_low double
+percent_drive_alone_white_95percent_ci_high double
+num_workers_who_drive_alone integer,
+percent_long_commute_drives_alone double
+"95percent_ci_low_19" double
+"95percent_ci_high_19" double
+quartile_35 integer,
+life_expectancy double
+"95percent_ci_low_20" double
+"95percent_ci_high_20" double
+life_expectancy_aian double
+life_expectancy_aian_95percent_ci_low double
+life_expectancy_aian_95percent_ci_high double
+life_expectancy_asian double
+life_expectancy_asian_95percent_ci_low double
+life_expectancy_asian_95percent_ci_high double
+life_expectancy_black double
+life_expectancy_black_95percent_ci_low double
+life_expectancy_black_95percent_ci_high double
+life_expectancy_hispanic double
+life_expectancy_hispanic_95percent_ci_low double
+life_expectancy_hispanic_95percent_ci_high double
+life_expectancy_white double
+life_expectancy_white_95percent_ci_low double
+life_expectancy_white_95percent_ci_high double
+num_deaths_2 integer,
+age_adjusted_death_rate double
+"95percent_ci_low_21" double
+"95percent_ci_high_21" double
+age_adjusted_mortality_aian double
+age_adjusted_mortality_aian_95percent_ci_low double
+age_adjusted_mortality_aian_95percent_ci_high double
+age_adjusted_mortality_asian double
+age_adjusted_mortality_asian_95percent_ci_low double
+age_adjusted_mortality_asian_95percent_ci_high double
+age_adjusted_mortality_black double
+age_adjusted_mortality_black_95percent_ci_low double
+age_adjusted_mortality_black_95percent_ci_high double
+age_adjusted_mortality_hispanic double
+age_adjusted_mortality_hispanic_95percent_ci_low double
+age_adjusted_mortality_hispanic_95percent_ci_high double
+age_adjusted_mortality_white double
+age_adjusted_mortality_white_95percent_ci_low double
+age_adjusted_mortality_white_95percent_ci_high double
+num_deaths_3 integer,
+child_mortality_rate double
+"95percent_ci_low_22" double
+"95percent_ci_high_22" double
+child_mortality_rate_aian double
+child_mortality_rate_aian_95percent_ci_low double
+child_mortality_rate_aian_95percent_ci_high double
+child_mortality_rate_asian double
+child_mortality_rate_asian_95percent_ci_low double
+child_mortality_rate_asian_95percent_ci_high double
+child_mortality_rate_black double
+child_mortality_rate_black_95percent_ci_low double
+child_mortality_rate_black_95percent_ci_high double
+child_mortality_rate_hispanic double
+child_mortality_rate_hispanic_95percent_ci_low double
+child_mortality_rate_hispanic_95percent_ci_high double
+child_mortality_rate_white double
+child_mortality_rate_white_95percent_ci_low double
+child_mortality_rate_white_95percent_ci_high double
+num_deaths_4 integer,
+infant_mortality_rate double
+"95percent_ci_low_23" double
+"95percent_ci_high_23" double
+infant_mortality_rate_aian double
+infant_mortality_rate_aian_95percent_ci_low double
+infant_mortality_rate_aian_95percent_ci_high double
+infant_mortality_rate_asian double
+infant_mortality_rate_asian_95percent_ci_low double
+infant_mortality_rate_asian_95percent_ci_high double
+infant_mortality_rate_black double
+infant_mortality_rate_black_95percent_ci_low double
+infant_mortality_rate_black_95percent_ci_high double
+infant_mortality_rate_hispanic double
+infant_mortality_rate_hispanic_95percent_ci_low double
+infant_mortality_rate_hispanic_95percent_ci_high double
+infant_mortality_rate_white double
+infant_mortality_rate_white_95percent_ci_low double
+infant_mortality_rate_white_95percent_ci_high double
+percent_frequent_physical_distress double
+"95percent_ci_low_24" double
+"95percent_ci_high_24" double
+percent_frequent_mental_distress double
+"95percent_ci_low_25" double
+"95percent_ci_high_25" double
+percent_adults_with_diabetes double
+"95percent_ci_low_26" double
+"95percent_ci_high_26" double
+num_hiv_cases integer,
+hiv_prevalence_rate double
+num_food_insecure integer,
+percent_food_insecure double
+num_limited_access double
+percent_limited_access_to_healthy_foods double
+num_drug_overdose_deaths integer,
+drug_overdose_mortality_rate double
+"95percent_ci_low_27" double
+"95percent_ci_high_27" double
+drug_overdose_mortality_rate_aian double
+drug_overdose_mortality_rate_aian_95percent_ci_low double
+drug_overdose_mortality_rate_aian_95percent_ci_high double
+drug_overdose_mortality_rate_asian double
+drug_overdose_mortality_rate_asian_95percent_ci_low double
+drug_overdose_mortality_rate_asian_95percent_ci_high double
+drug_overdose_mortality_rate_black double
+drug_overdose_mortality_rate_black_95percent_ci_low double
+drug_overdose_mortality_rate_black_95percent_ci_high double
+drug_overdose_mortality_rate_hispanic double
+drug_overdose_mortality_rate_hispanic_95percent_ci_low double
+drug_overdose_mortality_rate_hispanic_95percent_ci_high double
+drug_overdose_mortality_rate_white double
+drug_overdose_mortality_rate_white_95percent_ci_low double
+drug_overdose_mortality_rate_white_95percent_ci_high double
+num_motor_vehicle_deaths integer,
+motor_vehicle_mortality_rate double
+"95percent_ci_low_28" double
+"95percent_ci_high_28" double
+mv_mortality_rate_aian double
+mv_mortality_rate_aian_95percent_ci_low double
+mv_mortality_rate_aian_95percent_ci_high double
+mv_mortality_rate_asian double
+mv_mortality_rate_asian_95percent_ci_low double
+mv_mortality_rate_asian_95percent_ci_high double
+mv_mortality_rate_black double
+mv_mortality_rate_black_95percent_ci_low double
+mv_mortality_rate_black_95percent_ci_high double
+mv_mortality_rate_hispanic double
+mv_mortality_rate_hispanic_95percent_ci_low double
+mv_mortality_rate_hispanic_95percent_ci_high double
+mv_mortality_rate_white double
+mv_mortality_rate_white_95percent_ci_low double
+mv_mortality_rate_white_95percent_ci_high double
+percent_insufficient_sleep double
+"95percent_ci_low_29" double
+"95percent_ci_high_29" double
+num_uninsured_2 integer,
+percent_uninsured_2 double
+"95percent_ci_low_30" double
+"95percent_ci_high_30" double
+num_uninsured_3 integer,
+percent_uninsured_3 double
+"95percent_ci_low_31" double
+"95percent_ci_high_31" double
+other_primary_care_provider_rate double
+other_primary_care_provider_ratio text
+percent_disconnected_youth double
+"95percent_ci_low_32" double
+"95percent_ci_high_32" double
+average_grade_performance double
+average_grade_performance_asian double
+average_grade_performance_black double
+average_grade_performance_hispanic double
+average_grade_performance_white double
+average_grade_performance_2 double
+average_grade_performance_asian_2 double
+average_grade_performance_black_2 double
+average_grade_performance_hispanic_2 double
+average_grade_performance_white_2 double
+median_household_income integer,
+"95percent_ci_low_33" double
+"95percent_ci_high_33" double
+household_income_aian integer,
+household_income_aian_95percent_ci_low double
+household_income_aian_95percent_ci_high double
+household_income_asian integer,
+household_income_asian_95percent_ci_low double
+household_income_asian_95percent_ci_high double
+household_income_black integer,
+household_income_black_95percent_ci_low double
+household_income_black_95percent_ci_high double
+household_income_hispanic integer,
+household_income_hispanic_95percent_ci_low double
+household_income_hispanic_95percent_ci_high double
+household_income_white integer,
+household_income_white_95percent_ci_low double
+household_income_white_95percent_ci_high double
+percent_enrolled_in_free_or_reduced_lunch double
+segregation_index double
+segregation_index_2 double
+homicide_rate double
+"95percent_ci_low_34" double
+"95percent_ci_high_34" double
+homicide_rate_aian double
+homicide_rate_aian_95percent_ci_low double
+homicide_rate_aian_95percent_ci_high double
+homicide_rate_asian double
+homicide_rate_asian_95percent_ci_low double
+homicide_rate_asian_95percent_ci_high double
+homicide_rate_black double
+homicide_rate_black_95percent_ci_low double
+homicide_rate_black_95percent_ci_high double
+homicide_rate_hispanic double
+homicide_rate_hispanic_95percent_ci_low double
+homicide_rate_hispanic_95percent_ci_high double
+homicide_rate_white double
+homicide_rate_white_95percent_ci_low double
+homicide_rate_white_95percent_ci_high double
+num_deaths_5 integer,
+suicide_rate_age_adjusted double
+"95percent_ci_low_35" double
+"95percent_ci_high_35" double
+crude_rate double
+suicide_rate_aian double
+suicide_rate_aian_95percent_ci_low double
+suicide_rate_aian_95percent_ci_high double
+suicide_rate_asian double
+suicide_rate_asian_95percent_ci_low double
+suicide_rate_asian_95percent_ci_high double
+suicide_rate_black double
+suicide_rate_black_95percent_ci_low double
+suicide_rate_black_95percent_ci_high double
+suicide_rate_hispanic double
+suicide_rate_hispanic_95percent_ci_low double
+suicide_rate_hispanic_95percent_ci_high double
+suicide_rate_white double
+suicide_rate_white_95percent_ci_low double
+suicide_rate_white_95percent_ci_high double
+num_firearm_fatalities integer,
+firearm_fatalities_rate double
+"95percent_ci_low_36" double
+"95percent_ci_high_36" double
+firearm_fatalities_rate_aian double
+firearm_fatalities_rate_aian_95percent_ci_low double
+firearm_fatalities_rate_aian_95percent_ci_high double
+firearm_fatalities_rate_asian double
+firearm_fatalities_rate_asian_95percent_ci_low double
+firearm_fatalities_rate_asian_95percent_ci_high double
+firearm_fatalities_rate_black double
+firearm_fatalities_rate_black_95percent_ci_low double
+firearm_fatalities_rate_black_95percent_ci_high double
+firearm_fatalities_rate_hispanic double
+firearm_fatalities_rate_hispanic_95percent_ci_low double
+firearm_fatalities_rate_hispanic_95percent_ci_high double
+firearm_fatalities_rate_white double
+firearm_fatalities_rate_white_95percent_ci_low double
+firearm_fatalities_rate_white_95percent_ci_high double
+non_petitioned_cases text
+petitioned_cases text
+denominator integer,
+juvenile_arrest_rate double
+average_traffic_volume_per_meter_of_major_roadways double
+num_homeowners integer,
+percent_homeowners double
+"95percent_ci_low_37" double
+"95percent_ci_high_37" double
+num_households_with_severe_cost_burden integer,
+percent_severe_housing_cost_burden double
+"95percent_ci_low_38" double
+"95percent_ci_high_38" double
+population_2 integer,
+percent_less_than_18_years_of_age double
+percent_65_and_over double
+num_black integer,
+percent_black double
+num_american_indian_alaska_native integer,
+percent_american_indian_alaska_native double
+num_asian integer,
+percent_asian double
+num_native_hawaiian_other_pacific_islander integer,
+percent_native_hawaiian_other_pacific_islander double
+num_hispanic integer,
+percent_hispanic double
+num_non_hispanic_white integer,
+percent_non_hispanic_white double
+num_not_proficient_in_english integer,
+percent_not_proficient_in_english double
+"95percent_ci_low_39" double
+"95percent_ci_high_39" double
+percent_female double
+num_rural integer,
+percent_rural double
+
+birth_death_rate
+--
+"Notes" text
+"County" text
+"County Code" integer FK >- postal_codes.stcountyfp
+"Deaths" integer
+"Births" integer
+"Death Rate" text
+
+agg_county_donors
+--
+index bigint
+blue_amt bigint
+red_amt bigint
+other_amt bigint
+total_amt bigint
+blue_num bigint
+red_num bigint
+other_num bigint
+total_num bigint
+county text 
+state text 
+election_year bigint
+
+agg_county_votores
+--
+index bigint
+blue_votes bigint
+red_votes bigint
+other_votes bigint
+total_votes bigint
+county text
+state text
+election_year bigint
+"PopPct_Urban" double
+"Unemployment" double
+"PopDen_Urban" double
+"PopPct_Rural" double
+"PopDen_Rural" double
+winning_party text
+
+
+
+
