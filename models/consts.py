@@ -15,6 +15,10 @@ from sklearn.linear_model import LogisticRegression
 import numpy
 from mpl_toolkits.mplot3d import Axes3D
 import seaborn as sns
+import io
+import os
+# Imports the Google Cloud client library
+from google.cloud import storage
 
 #Constants used by the file
 
@@ -53,6 +57,14 @@ DROP_AGG_TABLE = True
 #postgres://[user]:[password]@[location]:[port]/[database]
 CREATE_ENGINE_STR = 'postgresql://' + CONFIG["user"] + ":" + CONFIG["password"] + "@" + CONFIG["location"] + ":" + CONFIG["port"] + "/" + CONFIG["db"]
 
+#Define the bucket to save the images from the LR Regression
+G_FOLDER_LINEAR = "linear"
+G_FOLDER_LOGISTIC = "logistic"
+G_FOLDER_SVC = "svc"
+G_FOLDER_UNSUPERVISED = "unsupervised"
+
+G_BUCKET_MODEL = "model_results"
+
 def select_columns(df, column_names):
     new_frame = df.loc[:, column_names]
     return new_frame
@@ -85,6 +97,52 @@ def merge_cmtid_party(donor_df):
         "UNK": party_other
     }
     
-    donor_df["party"] = donor_df["cmte_pty_affiliation"].map(cmte_party_map)
+    donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map)
     
     return donor_df
+
+def save_image_to_gcloud_lr(plt, file_name):
+    save_image_to_gcloud(plt, G_BUCKET_MODEL, G_FOLDER_LINEAR, file_name)
+
+def save_image_to_gcloud_log(plt, file_name):
+    save_image_to_gcloud(plt, G_BUCKET_MODEL, G_FOLDER_LOGISTIC, file_name)
+
+def save_image_to_gcloud_svc(plt, file_name):
+    save_image_to_gcloud(plt, G_BUCKET_MODEL, G_FOLDER_SVC, file_name)
+
+def save_image_to_gcloud_unsupervised(plt, file_name):
+    save_image_to_gcloud(plt, G_BUCKET_MODEL, G_FOLDER_UNSUPERVISED, file_name)
+
+def save_image_to_gcloud(plt, bucket_name, folder_name, file_name):
+    #Set gloud credentials.
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/C454479/Desktop/Codebases/data/gcloud/gcloud_creds.json" 
+    
+    client = storage.Client()
+    bucket = client.get_bucket(bucket_name)
+
+    #filename = f"{folder_name}/{file_name}"
+    blob = bucket.blob(file_name)
+
+    # temporarily save image to buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+
+    # upload buffer contents to gcs
+    blob.upload_from_string(
+        buf.getvalue(),
+        content_type='image/png')
+    buf.close()
+
+    # Uploading from a local file using open()
+    #with open('photo.jpg', 'rb') as photo:
+    #    blob.upload_from_file(photo)
+
+    # Uploading from local file without open()
+    #blob.upload_from_filename('photo.jpg')
+
+    # gcs url to uploaded matplotlib image
+    #url = blob.public_url
+
+	#blob.make_public()
+	#url = blob.public_url
+	#print(f"Image URL - {url}")
