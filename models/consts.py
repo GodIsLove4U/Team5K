@@ -23,6 +23,7 @@ SML_TEST_SIZE = 0.25
 #The start/end election years to run analysis
 ELECTION_STARTING_YR = 2000
 ELECTION_ENDING_YR = 2020
+#ELECTION_ENDING_YR = 2003
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
@@ -32,6 +33,8 @@ SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
+TABLE_SIX_STATE_DONATIONS = "six_state_donations"
+
 #Column Names
 VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural", "winning_party"]
 DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "blue_num", "red_num", "other_num", "total_num", "county", "state", "election_year"]    
@@ -46,6 +49,7 @@ CONFIG = {'user': 'postgres',
           "db": "team5k",
           "port": "5432"}
 
+DROP_AGG_TABLE = True
 #postgres://[user]:[password]@[location]:[port]/[database]
 CREATE_ENGINE_STR = 'postgresql://' + CONFIG["user"] + ":" + CONFIG["password"] + "@" + CONFIG["location"] + ":" + CONFIG["port"] + "/" + CONFIG["db"]
 
@@ -59,3 +63,28 @@ def label_enc(df):
     # Encode first DataFrame 1 (where all values are floats)
     df = df.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
     return df
+
+#Add a new column party to the DF that maps the committee party abbreviation to a major party
+def merge_cmtid_party(donor_df):        
+    #Get the major party strings to map to 
+    party_repub = MAJOR_PARTIES[1]
+    party_democrat = MAJOR_PARTIES[0]
+    party_other = "other"
+    
+    #Map the affiliation code to the party affiliation
+    cmte_party_map = {
+        "REP": party_repub,
+        "TEA": party_repub,
+        "DNL": party_democrat,
+        "DNL": party_democrat,
+        "DEM": party_democrat,
+        "D/C": party_democrat,
+        "DFL": party_democrat,
+        "THD": party_democrat,
+        "PPD": party_democrat,
+        "UNK": party_other
+    }
+    
+    donor_df["party"] = donor_df["cmte_pty_affiliation"].map(cmte_party_map)
+    
+    return donor_df
