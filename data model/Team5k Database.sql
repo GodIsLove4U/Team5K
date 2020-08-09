@@ -22,6 +22,44 @@ CREATE TABLE "candidates" (
     "CAND_ZIP" text   NOT NULL
 );
 
+CREATE TABLE public.classifying_results
+(
+    "FIPStxt" bigint,
+    "POP_COU" bigint,
+    "AREA_COU" bigint,
+    "POP_URBAN" bigint,
+    "POPPCT_URBAN" double precision,
+    "AREA_URBAN" bigint,
+    "AREAPCT_URBAN" double precision,
+    "POPDEN_URBAN" double precision,
+    "POP_UA" bigint,
+    "POPPCT_UA" double precision,
+    "AREA_UA" bigint,
+    "AREAPCT_UA" double precision,
+    "POPDEN_UA" double precision,
+    "POP_UC" bigint,
+    "POPPCT_UC" double precision,
+    "AREA_UC" bigint,
+    "AREAPCT_UC" double precision,
+    "POPDEN_UC" double precision,
+    "POP_RURAL" bigint,
+    "POPPCT_RURAL" double precision,
+    "AREA_RURAL" bigint,
+    "AREAPCT_RURAL" double precision,
+    "POPDEN_RURAL" double precision,
+    "PC 1" double precision,
+    "PC 2" double precision,
+    "PC 3" double precision,
+    "PC 4" double precision,
+    "PC 5" double precision,
+    "PC 6" double precision,
+    "PC 7" double precision,
+    "PC 8" double precision,
+    "PC 9" double precision,
+    "PC 10" double precision,
+    class integer
+);
+
 CREATE TABLE "committees" (
     "CMTE_ID" text   NOT NULL,
     "CMTE_NM" text   NOT NULL,
