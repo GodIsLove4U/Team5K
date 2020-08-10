@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="static/js/ml.js"></script>
 
     <title>UCBE: Team 5k Final Project</title>
 </head>
@@ -14,10 +15,11 @@
 <body>
     <div class="container">
 
-
         <div class="jumbotron text-center" style="margin-bottom:0">
-            <h1>Who will win President 2020?</h1>
-            <p>Can we predict the number of votes obtained based on the amount of donations raised in that county?</p>
+            <h1>Biden || Trump?</h1>
+            <h2>Which Presidential Candidate will win the Swing States in 2020?</h1>
+                <p>Can we predict the number of votes obtained based on the amount of donations raised in that county?
+                </p>
         </div>
 
         <nav class="navbar navbar-inverse">
@@ -28,29 +30,32 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">WebSiteName</a>
+                    <a class="navbar-brand" href="#">Team5k</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
                         <li><a href="#">Page 2</a></li>
-                        <li><a href="#">Page 3</a></li>
+                        <li><a href="#">Team</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
         <div class="row">
-            <form action="/updateMlType" method="post">
-                <div class="col-sm" id="mainselection">
-                    <select name="ml_types" method="GET" action="/">
+            <form>
+                <div class="form-group col-md-4">
+                    <select id="mlType" class="form-control">
                         {% for ml_type in ml_types %}
-                        <option value="{{ml_type}}">"{{ml_type}}"</option>"
+                        <option>{{ml_type}}</option>
                         {% endfor %}
+                    </select>
                 </div>
+                <a href="#" id="submitBtn"> <button class="btn btn-default">Submit</button></a>
             </form>
         </div>
     </div>
 
 </body>
+
 </html>
