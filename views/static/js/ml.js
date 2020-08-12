@@ -62,8 +62,8 @@ $(document).ready(function () {
                     $('<img />').attr({
                         'id': 'img'+i,
                         'src': file_path,
-                        'width': 250,
-                        'height': 250
+                        'width': "100%",
+                        'height': "100%"
                     }).appendTo(results_div);
                 }
             },
