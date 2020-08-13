@@ -84,28 +84,124 @@ def label_enc(df):
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
 def merge_cmtid_party(donor_df):        
     #Get the major party strings to map to 
-    party_repub = MAJOR_PARTIES[1]
     party_democrat = MAJOR_PARTIES[0]
+    party_repub = MAJOR_PARTIES[1]
     party_other = MAJOR_PARTIES[2]
+    party_not_found = "N/A"
 
-    #Map the affiliation code to the party affiliation
-    cmte_party_map = {
-        'LIB': party_repub,
-        "CRV": party_repub,
-        "REP": party_repub,
-        "TEA": party_repub,
-        "NDP": party_democrat,
-        "DNL": party_democrat,
-        "DNL": party_democrat,
-        "DEM": party_democrat,
+    #Map out all party IDs that map to a left wing party 
+    cmte_blue_map = {
+        "CIT": party_democrat,
+        "CMP": party_democrat,
+        "COM": party_democrat,
         "D/C": party_democrat,
-        "DFL": party_democrat,
+        'DCG': party_democrat,
+        "DEM": party_democrat,
+        'DFL': party_democrat,
+        "DNL": party_democrat,
+        "GR": party_democrat,
+        "GRE": party_democrat,
+        "GRT": party_democrat,
+        "GWP": party_democrat,
+        "HRP": party_democrat,
+        "HRP": party_democrat,
+        "ICD": party_democrat,
+        "LAB": party_democrat,
+        "LBL": party_democrat,
+        "LBU": party_democrat,
+        "LIB": party_democrat,
+        "LRU": party_democrat,
+        "NAP": party_democrat,
+        "NDP": party_democrat,
+        "PAF": party_democrat,
+        "PFD": party_democrat,
+        "PFP": party_democrat,
+        "PRI": party_democrat,
+        "PRO": party_democrat,
+        "PSL": party_democrat,
+        "RUP": party_democrat,
+        "SEP": party_democrat,
+        "SLP": party_democrat,
+        "SOC": party_democrat,
+        "SUS": party_democrat,
+        "SWP": party_democrat,
         "THD": party_democrat,
-        "PPD": party_democrat
+        "UC": party_democrat,
+        "USP": party_democrat
     }
-    
+
+    cmte_red_map = {
+        "AIC": party_repub,
+        "AIP": party_repub,
+        "AKI": party_repub,
+        "AMP": party_repub,
+        "APF": party_repub,
+        "CNC": party_repub,
+        "CON": party_repub,
+        "CRV": party_repub,
+        "CST": party_repub,
+        "FRE": party_repub,
+        "IAP": party_repub,
+        "NDP": party_repub,
+        "NJC": party_repub,
+        "RTL": party_repub,
+        "TEA": party_repub,
+        "UST": party_repub,
+        "WTP": party_repub
+    }
+
+    cmte_other_map = {
+        "ACE": party_other,
+        "AE": party_other,
+        "CMD": party_other,
+        "COU": party_other,
+        "DGR": party_other,
+        "FED": party_other,
+        "FLP": party_other,
+        "IDE": party_other,
+        "IDP": party_other,
+        "IGD": party_other,
+        "IGR": party_other,
+        "IND": party_other,
+        "IP": party_other,
+        "JCN": party_other,
+        "JUS": party_other,
+        "LBR": party_other,
+        "LFT": party_other,
+        "MTP": party_other,
+        "N": party_other,
+        "NA": party_other,
+        "NLP": party_other,
+        "NNE": party_other,
+        "NON": party_other,
+        "NOP": party_other,
+        "NPA": party_other,
+        "NPP": party_other,
+        "OE": party_other,
+        "OTH": party_other,
+        "PCH": party_other,
+        "PG": party_other,
+        "POP": party_other,
+        "PPD": party_other,
+        "PPY": party_other,
+        "REF": party_other,
+        "RES": party_other,
+        "TWR": party_other,
+        "TX": party_other,
+        "UN": party_other,
+        "UNI": party_other,
+        "UNK": party_other,
+        "VET": party_other,
+        "W": party_other
+    }
+
+    cmte_party_map = {}
+    cmte_party_map.update(cmte_blue_map)
+    cmte_party_map.update(cmte_red_map)
+    cmte_party_map.update(cmte_other_map)
+
     #Map from party code to dem/rep and have other party as default
-    donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_other).astype(str)
+    donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_not_found).astype(str)
 
     return donor_df
 
