@@ -22,6 +22,7 @@ import os
 
 #Constants used by the file
 
+#Constant to define how to split the train and test data samples
 SML_TEST_SIZE = 0.25
 
 #The start/end election years to run analysis
