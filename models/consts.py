@@ -82,6 +82,16 @@ def label_enc(df):
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df
 
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_log_tables():
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LOG, engine)
+
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_lr_tables():
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LR, engine)
+
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
 def merge_cmtid_party(donor_df):        
     #Get the major party strings to map to 

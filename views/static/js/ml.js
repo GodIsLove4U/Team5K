@@ -41,6 +41,14 @@ function handle_lr_response(results_div, stat, file_dir, i){
     append_img(file_path, results_div, img_id);
 }
 
+function handle_us_response(stat, results_div, i){
+    console.log(stat);
+    let img_id = 'img'+i;
+
+    let file_path = stat["file_path"];
+    append_img(file_path, results_div, img_id);
+}
+
 function handle_stats_don_response(stat, results_div, i){
     console.log(stat);
     let img_id = 'img'+i;
@@ -127,7 +135,7 @@ $(document).ready(function () {
                     } else if(ml_type == ML_TYPE_LOG) {
                         handle_log_response(results_div, stat, file_dir, i);
                     } else if(ml_type == ML_TYPE_US) {
-
+                        handle_us_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_STATS_DONATIONS) {
                         handle_stats_don_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_STATS_VOTES) {

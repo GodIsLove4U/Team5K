@@ -47,7 +47,7 @@ def ml_type(ml_type=None):
     if ml_type == ML_TYPE_LR:
         stats = query_res_lr_sql()
     elif ml_type == ML_TYPE_LOG:
-            stats = query_res_log_sql()
+        stats = query_res_log_sql()
     elif ml_type == ML_TYPE_US:
         stats = query_res_us_sql()
     elif ml_type == ML_TYPE_STATS_DONATIONS:
@@ -107,8 +107,28 @@ def query_res_log_sql():
     return stats
 
 def query_res_us_sql():
-    params_str = "*"
-    return query_table_sql(TABLE_RES_LR, params_str)
+    print("query_res_log_sql")
+
+        params_str = "(accuracy,recall,precision,f1,sml_param,state)"
+        query_str = f"SELECT * FROM {TABLE_RES_LR};"
+
+        stats = []
+        with engine.connect() as con:
+            rows = con.execute(query_str)
+            for row in rows:
+                stat = {}
+                print("row = ")
+                print(row)
+                stat["accuracy"] = row[1]
+                stat["recall"] = row[2]
+                stat["precision"] = row[3]
+                stat["f1"] = row[4]
+                stat["sml_param"] = row[5]
+                stat["state"] = row[6]
+
+                stats.append(stat)
+
+        return stats
 
 def get_dir_filenames(file_dir):
     filenames = [f for f in listdir(file_dir) if isfile(join(file_dir, f))]
