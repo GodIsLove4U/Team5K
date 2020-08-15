@@ -42,9 +42,13 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
+TABLE_RES_RF = "res_rf"
+
 TABLE_RES_SVC = "res_svc"
 
 MODEL_TYPE_LOG = "log"
+MODEL_TYPE_RF = "rf"
+
 #Column Names
 VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural", "winning_party"]
 DONOR_COLS = ["blue_amt", "red_amt", "other_amt", "total_amt", "blue_num", "red_num", "other_num", "total_num", "county", "state", "election_year"]    
@@ -100,6 +104,10 @@ def drop_res_log_tables(engine):
 def drop_res_lr_tables(engine):
     if DROP_AGG_TABLE:
         sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LR, engine)
+
+def drop_res_rf_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_RF, engine)
 
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
 def merge_cmtid_party(donor_df):        
