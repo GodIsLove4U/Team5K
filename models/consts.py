@@ -18,16 +18,14 @@ import seaborn as sns
 import io
 import os
 # Imports the Google Cloud client library
-from google.cloud import storage
+#from google.cloud import storage
 
-#Constants used by the file
-
+#Constant to define how to split the train and test data samples
 SML_TEST_SIZE = 0.25
 
 #The start/end election years to run analysis
 ELECTION_STARTING_YR = 2000
 ELECTION_ENDING_YR = 2020
-#ELECTION_ENDING_YR = 2003
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
@@ -41,7 +39,11 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
+TABLE_RES_RF = "res_rf"
 TABLE_RES_SVC = "res_svc"
+
+MODEL_TYPE_LOG = "log"
+MODEL_TYPE_RF = "rf"
 
 #Column Names
 VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural", "winning_party"]
@@ -69,43 +71,162 @@ G_FOLDER_UNSUPERVISED = "unsupervised"
 
 G_BUCKET_MODEL = "model_results"
 
+# Create encoder, make it global so that the model uses the same instance of the label encoder
+le = LabelEncoder()
+
+def create_file_name(model_type, sml_param, state):
+    file_name = f"{model_type}_{sml_param}_{state}.png"
+    return file_name
+
+def create_title(model_type, sml_param, score_str):
+    title = f"{model_type}-{sml_param}:{score_str}"
+    return title
+
 def select_columns(df, column_names):
     new_frame = df.loc[:, column_names]
     return new_frame
 
 def label_enc(df):
     obj_list = df.select_dtypes(include = "object").columns
-    # Create encoder
-    le = LabelEncoder()
     for feat in obj_list:
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df
 
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_log_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LOG, engine)
+
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_lr_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LR, engine)
+
+def drop_res_rf_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_RF, engine)
+
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
 def merge_cmtid_party(donor_df):        
     #Get the major party strings to map to 
-    party_repub = MAJOR_PARTIES[1]
     party_democrat = MAJOR_PARTIES[0]
+    party_repub = MAJOR_PARTIES[1]
     party_other = MAJOR_PARTIES[2]
+    party_not_found = "N/A"
 
-    #Map the affiliation code to the party affiliation
-    cmte_party_map = {
-        'LIB': party_repub,
-        "CRV": party_repub,
-        "REP": party_repub,
-        "TEA": party_repub,
-        "NDP": party_democrat,
-        "DNL": party_democrat,
-        "DNL": party_democrat,
-        "DEM": party_democrat,
+    #Map out all party IDs that map to a left wing party 
+    cmte_blue_map = {
+        "CIT": party_democrat,
+        "CMP": party_democrat,
+        "COM": party_democrat,
         "D/C": party_democrat,
-        "DFL": party_democrat,
+        'DCG': party_democrat,
+        "DEM": party_democrat,
+        'DFL': party_democrat,
+        "DNL": party_democrat,
+        "GR": party_democrat,
+        "GRE": party_democrat,
+        "GRT": party_democrat,
+        "GWP": party_democrat,
+        "HRP": party_democrat,
+        "HRP": party_democrat,
+        "ICD": party_democrat,
+        "LAB": party_democrat,
+        "LBL": party_democrat,
+        "LBU": party_democrat,
+        "LIB": party_democrat,
+        "LRU": party_democrat,
+        "NAP": party_democrat,
+        "NDP": party_democrat,
+        "PAF": party_democrat,
+        "PFD": party_democrat,
+        "PFP": party_democrat,
+        "PRI": party_democrat,
+        "PRO": party_democrat,
+        "PSL": party_democrat,
+        "RUP": party_democrat,
+        "SEP": party_democrat,
+        "SLP": party_democrat,
+        "SOC": party_democrat,
+        "SUS": party_democrat,
+        "SWP": party_democrat,
         "THD": party_democrat,
-        "PPD": party_democrat
+        "UC": party_democrat,
+        "USP": party_democrat
     }
-    
+
+    cmte_red_map = {
+        "AIC": party_repub,
+        "AIP": party_repub,
+        "AKI": party_repub,
+        "AMP": party_repub,
+        "APF": party_repub,
+        "CNC": party_repub,
+        "CON": party_repub,
+        "CRV": party_repub,
+        "CST": party_repub,
+        "FRE": party_repub,
+        "IAP": party_repub,
+        "NDP": party_repub,
+        "NJC": party_repub,
+        "RTL": party_repub,
+        "TEA": party_repub,
+        "UST": party_repub,
+        "WTP": party_repub
+    }
+
+    cmte_other_map = {
+        "ACE": party_other,
+        "AE": party_other,
+        "CMD": party_other,
+        "COU": party_other,
+        "DGR": party_other,
+        "FED": party_other,
+        "FLP": party_other,
+        "IDE": party_other,
+        "IDP": party_other,
+        "IGD": party_other,
+        "IGR": party_other,
+        "IND": party_other,
+        "IP": party_other,
+        "JCN": party_other,
+        "JUS": party_other,
+        "LBR": party_other,
+        "LFT": party_other,
+        "MTP": party_other,
+        "N": party_other,
+        "NA": party_other,
+        "NLP": party_other,
+        "NNE": party_other,
+        "NON": party_other,
+        "NOP": party_other,
+        "NPA": party_other,
+        "NPP": party_other,
+        "OE": party_other,
+        "OTH": party_other,
+        "PCH": party_other,
+        "PG": party_other,
+        "POP": party_other,
+        "PPD": party_other,
+        "PPY": party_other,
+        "REF": party_other,
+        "RES": party_other,
+        "TWR": party_other,
+        "TX": party_other,
+        "UN": party_other,
+        "UNI": party_other,
+        "UNK": party_other,
+        "VET": party_other,
+        "W": party_other
+    }
+
+    cmte_party_map = {}
+    cmte_party_map.update(cmte_blue_map)
+    cmte_party_map.update(cmte_red_map)
+    cmte_party_map.update(cmte_other_map)
+
     #Map from party code to dem/rep and have other party as default
-    donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_other).astype(str)
+    donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_not_found).astype(str)
 
     return donor_df
 

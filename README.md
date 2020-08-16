@@ -1,7 +1,23 @@
 # Team5K
 ## Introduction
-  * Our main goal is to analyze the predictive power of political donations on presidential election outcomes in key battleground states in the United States. We will build predictive models using machine learning to understand how donations to political campaigns inform voting in counties and states. We will also look at times of economic and social crises and how it may impact and shift the parties to which voters choose to donate.
-  * We found that this topic could have impactful predictive power in understanding how times of crises can influence the outcomes of presidential elections. The state of the pandemic in the US paired with civil unrest throughout the country pose a dynamic background for the upcoming presidential elections. As active citizens, our group is invested in evaluating how events similar in magnitude have created shifts in political affiliation.
+* Our goal is to analyze the predictive power of political donations on presidential election outcomes in key battleground states in the United States. We will build predictive models using machine learning to understand how donations to political campaigns inform voting in counties and states. We will also look at times of economic and social crises and how it may impact and shift the parties to which voters choose to donate.
+* We found that this topic could have impactful predictive power in understanding how times of crises can influence the outcomes of presidential elections. The state of the pandemic in the US paired with civil unrest throughout the country pose a dynamic background for the upcoming presidential elections. As active citizens, our group is invested in evaluating how events similar in magnitude have created shifts in political affiliation.
+* This repository includes the following:
+  * ETL: Files related to extracting and transforming raw data in queryable tables. 
+  * Data Extracts: All CSV files holding raw data, before ETL process.
+  * Data Model: Entity Relationship Diagrams (ERDs) related to data transformation.
+  * Models: Jupyter Notebooks containing all machine learning algorithms, exploratory data analysis, and regression analysis code. Also includes files containing PNGs of resulting visualizations from analysis.
+  * Preso_Info: Files related to final presentation, including link to Google Slides [presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing).
+    * Includes project deliverables for [Segment 2](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentTwoProjectInfo-Team5K.pdf) including information on
+       -Data exploration
+       -Data analysis
+       -Feature engineering
+       -Preprocessing
+       -Peer Review
+       -Final Dashboard Description
+       -Dashboard interactive elements
+       -Data sources
+  * Views: HTML files related to building interactive dashboard.
 
 ## Dataset Overview
 * For our analysis, we are using publicly available datasets that evaluate the following features:
