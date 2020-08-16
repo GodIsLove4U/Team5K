@@ -28,7 +28,6 @@ SML_TEST_SIZE = 0.25
 #The start/end election years to run analysis
 ELECTION_STARTING_YR = 2000
 ELECTION_ENDING_YR = 2020
-#ELECTION_ENDING_YR = 2003
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
@@ -43,7 +42,6 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
 TABLE_RES_RF = "res_rf"
-
 TABLE_RES_SVC = "res_svc"
 
 MODEL_TYPE_LOG = "log"
@@ -75,6 +73,9 @@ G_FOLDER_UNSUPERVISED = "unsupervised"
 
 G_BUCKET_MODEL = "model_results"
 
+# Create encoder
+le = LabelEncoder()
+
 def create_file_name(model_type, sml_param, state):
     file_name = f"{model_type}_{sml_param}_{state}.png"
     return file_name
@@ -89,8 +90,6 @@ def select_columns(df, column_names):
 
 def label_enc(df):
     obj_list = df.select_dtypes(include = "object").columns
-    # Create encoder
-    le = LabelEncoder()
     for feat in obj_list:
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df

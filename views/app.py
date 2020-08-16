@@ -109,24 +109,24 @@ def query_res_log_sql():
 def query_res_us_sql():
     print("query_res_log_sql")
 
-        params_str = "(accuracy,recall,precision,f1,sml_param,state)"
-        query_str = f"SELECT * FROM {TABLE_RES_LR};"
+    params_str = "(accuracy,recall,precision,f1,sml_param,state)"
+    query_str = f"SELECT * FROM {TABLE_RES_LR};"
 
-        stats = []
-        with engine.connect() as con:
-            rows = con.execute(query_str)
-            for row in rows:
-                stat = {}
-                print("row = ")
-                print(row)
-                stat["accuracy"] = row[1]
-                stat["recall"] = row[2]
-                stat["precision"] = row[3]
-                stat["f1"] = row[4]
-                stat["sml_param"] = row[5]
-                stat["state"] = row[6]
+    stats = []
+    with engine.connect() as con:
+        rows = con.execute(query_str)
+        for row in rows:
+            stat = {}
+            print("row = ")
+            print(row)
+            stat["accuracy"] = row[1]
+            stat["recall"] = row[2]
+            stat["precision"] = row[3]
+            stat["f1"] = row[4]
+            stat["sml_param"] = row[5]
+            stat["state"] = row[6]
 
-                stats.append(stat)
+            stats.append(stat)
 
         return stats
 
