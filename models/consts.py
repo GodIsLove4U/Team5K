@@ -20,8 +20,6 @@ import os
 # Imports the Google Cloud client library
 #from google.cloud import storage
 
-#Constants used by the file
-
 #Constant to define how to split the train and test data samples
 SML_TEST_SIZE = 0.25
 
@@ -73,7 +71,7 @@ G_FOLDER_UNSUPERVISED = "unsupervised"
 
 G_BUCKET_MODEL = "model_results"
 
-# Create encoder
+# Create encoder, make it global so that the model uses the same instance of the label encoder
 le = LabelEncoder()
 
 def create_file_name(model_type, sml_param, state):
