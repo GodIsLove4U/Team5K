@@ -20,14 +20,12 @@ import os
 # Imports the Google Cloud client library
 #from google.cloud import storage
 
-#Constants used by the file
-
+#Constant to define how to split the train and test data samples
 SML_TEST_SIZE = 0.25
 
 #The start/end election years to run analysis
 ELECTION_STARTING_YR = 2000
 ELECTION_ENDING_YR = 2020
-#ELECTION_ENDING_YR = 2003
 ELECTION_INTERVAL = 4
 
 #Total sum of donations per party per county
@@ -41,7 +39,11 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
+TABLE_RES_RF = "res_rf"
 TABLE_RES_SVC = "res_svc"
+
+MODEL_TYPE_LOG = "log"
+MODEL_TYPE_RF = "rf"
 
 #Column Names
 VOTES_COLS = ["blue_votes", "red_votes", "other_votes", "total_votes", "county", "state", "election_year", "PopPct_Urban", "Unemployment", "PopDen_Urban", "PopPct_Rural", "PopDen_Rural", "winning_party"]
@@ -69,17 +71,40 @@ G_FOLDER_UNSUPERVISED = "unsupervised"
 
 G_BUCKET_MODEL = "model_results"
 
+# Create encoder, make it global so that the model uses the same instance of the label encoder
+le = LabelEncoder()
+
+def create_file_name(model_type, sml_param, state):
+    file_name = f"{model_type}_{sml_param}_{state}.png"
+    return file_name
+
+def create_title(model_type, sml_param, score_str):
+    title = f"{model_type}-{sml_param}:{score_str}"
+    return title
+
 def select_columns(df, column_names):
     new_frame = df.loc[:, column_names]
     return new_frame
 
 def label_enc(df):
     obj_list = df.select_dtypes(include = "object").columns
-    # Create encoder
-    le = LabelEncoder()
     for feat in obj_list:
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df
+
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_log_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LOG, engine)
+
+#Aggregate tables are the output of this script, drop them to start fresh
+def drop_res_lr_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_LR, engine)
+
+def drop_res_rf_tables(engine):
+    if DROP_AGG_TABLE:
+        sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_RF, engine)
 
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
 def merge_cmtid_party(donor_df):        
