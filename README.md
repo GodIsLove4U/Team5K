@@ -7,7 +7,7 @@
   * Data Extracts: All CSV files holding raw data, before ETL process.
   * Data Model: Entity Relationship Diagrams (ERDs) related to data transformation.
   * Models: Jupyter Notebooks containing all machine learning algorithms, exploratory data analysis, and regression analysis code. Also includes files containing PNGs of resulting visualizations from analysis.
-  * Preso_Info: Includes project deliverables for [Segment 3](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentThree%E2%80%93ProjectInfo.pdf), the[presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing), including information on
+  * Preso_Info: Includes project deliverables for [Segment 3](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentThree%E2%80%93ProjectInfo.pdf), the [presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing), including information on
     * Data exploration
     * Data analysis
     * Feature engineering
