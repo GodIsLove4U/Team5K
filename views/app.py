@@ -22,6 +22,7 @@ engine = create_engine(postgres_url)
 ML_TYPE_LR = "Linear_Regression"
 ML_TYPE_LOG = "Logistic_Regression"
 ML_TYPE_US = "Unsupervised"
+ML_TYPE_STATS_COUNTIES = "Stats_Counties"
 ML_TYPE_STATS_DONATIONS = "Stats_Donations"
 ML_TYPE_STATS_VOTES = "Stats_Votes"
 
@@ -29,10 +30,14 @@ TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
 TABLE_AGG_COUNTY_DONORS = "agg_county_donors"
 TABLE_AGG_COUNTY_VOTES = "agg_county_votes"
+TABLE_RES_RF = "res_rf"
+TABLE_RES_COUNTIES = "res_counties"
+TABLE_RES_STATS_DONATIONS = "res_stats_donations"
+TABLE_RES_STATS_VOTES = "res_stats_voters"
 
 @app.route("/")
 def home():
-    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
+    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_STATS_COUNTIES, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
@@ -54,6 +59,8 @@ def ml_type(ml_type=None):
         stats = query_res_stats_donations_sql()
     elif ml_type == ML_TYPE_STATS_VOTES:
         stats = query_res_stats_votes_sql()
+    elif ml_type == ML_TYPE_STATS_COUNTIES:
+        stats = query_res_counties_sql()
 
     return jsonify({
         "ml_type": ml_type,
@@ -63,8 +70,9 @@ def ml_type(ml_type=None):
 def query_res_lr_sql():
     print("query_res_lr_sql")
 
-    params_str = "(state,sml_param,r2_score,file_name)"
-    query_str = f"SELECT * FROM {TABLE_RES_LR};"
+    params_str = "*"
+    #params_str = "(state,sml_param,r2_score,file_name)"
+    query_str = f"SELECT {params_str} FROM {TABLE_RES_LR};"
     
     stats = []
     with engine.connect() as con:
@@ -82,10 +90,51 @@ def query_res_lr_sql():
 
     return stats
 
+def query_filename_sql(table_name, type):
+    print("query_filename_sql")
+
+    #params_str = "(file_name,title)"
+    params_str = "*"
+    query_str = f"SELECT {params_str} FROM {table_name};"
+
+    model_dir = ""
+    if type == 1:
+        model_dir = "county_cluster"
+    elif type == 2:
+        model_dir = "stats_votes"
+    else:
+        model_dir = "stats_donation"
+
+    stats = []
+    with engine.connect() as con:
+        rows = con.execute(query_str)
+        for row in rows:
+            stat = {}
+            print("row = ")
+            print(row)
+            f_name = row[1]
+            stat["file_name"] = f_name
+            stat["title"] = row[2]
+            stat["file_path"] = f"./static/img/{model_dir}/{f_name}"
+
+            stats.append(stat)
+
+    return stats
+
+def query_res_counties_sql():
+    return query_filename_sql(TABLE_RES_COUNTIES, 1)
+
+def query_res_stats_votes_sql():
+    return query_filename_sql(TABLE_RES_STATS_VOTES, 2)
+
+def query_res_stats_donations_sql():
+    return query_filename_sql(TABLE_RES_STATS_DONATIONS, 3)
+
 def query_res_log_sql():
     print("query_res_log_sql")
 
-    params_str = "(accuracy,recall,precision,f1,sml_param,state)"
+    params_str = "*"
+    #params_str = "(accuracy,recall,precision,f1,sml_param,state,file_name)"
     query_str = f"SELECT * FROM {TABLE_RES_LOG};"
 
     stats = []
@@ -101,6 +150,7 @@ def query_res_log_sql():
             stat["f1"] = row[4]
             stat["sml_param"] = row[5]
             stat["state"] = row[6]
+            stat["file_name"] = row[7]
 
             stats.append(stat)
 
@@ -149,16 +199,6 @@ def get_file_paths(file_dir):
         print(filepath)
         stats.append(stat)
     return stats
-
-def query_res_stats_donations_sql():
-    file_dir = "./static/img/stats_donation/"
-    filepaths = get_file_paths(file_dir)
-    return filepaths
-
-def query_res_stats_votes_sql():
-    file_dir = "./static/img/stats_votes/"
-    filepaths = get_file_paths(file_dir)
-    return filepaths
 
 def query_table_sql(table_name, params_str):
     print("query_table_sql")

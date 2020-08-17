@@ -1,19 +1,26 @@
 const ML_TYPE_LR = "Linear_Regression";
 const ML_TYPE_LOG = "Logistic_Regression";
 const ML_TYPE_US = "Unsupervised";
+const ML_TYPE_COUNTY = "Stats_Counties";
 const ML_TYPE_STATS_DONATIONS = "Stats_Donations";
 const ML_TYPE_STATS_VOTES = "Stats_Votes";
 
 var mlType_dir_dict = {
-    "Linear_Regression": "linear_regression",
-    "Unsupervised": "unsupervised_ml",
-    "Stats_Donations": "stats_donation",
-    "Stats_Votes": "stats_votes"
+    ML_TYPE_LR: "linear_regression",
+    ML_TYPE_LOG: "logistic_regression",
+    ML_TYPE_US: "unsupervised_ml",
+    ML_TYPE_COUNTY: "county_cluster",
+    ML_TYPE_STATS_DONATIONS: "stats_donation",
+    ML_TYPE_STATS_VOTES: "stats_votes"
 };
+
+function append_span(results_div, span_id, str){
+    console.log(str);
+    $('<span />').html(str).appendTo(results_div);
+}
 
 function append_img(file_path, results_div, img_id){
     console.log(file_path);
-
     $('<img />').attr({
         'id': img_id,
         'src': file_path,
@@ -49,20 +56,33 @@ function handle_us_response(stat, results_div, i){
     append_img(file_path, results_div, img_id);
 }
 
-function handle_stats_don_response(stat, results_div, i){
+function handle_stats_filename_response(stat, results_div, i){
     console.log(stat);
+
     let img_id = 'img'+i;
+    let span_id = 'span'+i;
 
     let file_path = stat["file_path"];
+    let title = stat["title"];
+
+    console.log("title = !");
+    console.log(title);
+    console.log(file_path);
+
+    append_span(results_div, span_id,title);
     append_img(file_path, results_div, img_id);
 }
 
-function handle_stats_votes_response(stat, results_div, i){
-    console.log(stat);
-    let img_id = 'img'+i;
+function handle_stats_don_response(stat, results_div, i){
+    handle_stats_filename_response(stat, results_div, i);
+}
 
-    let file_path = stat["file_path"];
-    append_img(file_path, results_div, img_id);
+function handle_stats_votes_response(stat, results_div, i){
+    handle_stats_filename_response(stat, results_div, i);
+}
+
+function handle_stats_counties_response(stat, results_div, i){
+    handle_stats_filename_response(stat, results_div, i);
 }
 
 function handle_log_response(results_div, stat, file_dir, i){
@@ -105,7 +125,7 @@ $(document).ready(function () {
             type: "GET", url: ml_url,
             success: function (data, text) {
                 console.log("success");
-                //console.log(data);
+                console.log(data);
                 //Get elements from data
                 let ml_type = data["ml_type"];
                 let stats = data["stats"];
@@ -113,19 +133,21 @@ $(document).ready(function () {
                 //Get the div columns to add image grid to
                 let results_div_col1 = $("#results_images_col1");
                 let results_div_col2 = $("#results_images_col2");
-                let results_div_col3 = $("#results_images_col3");
+                //let results_div_col3 = $("#results_images_col3");
+
+                $("#results_images_col1").empty();
+                $("#results_images_col2").empty();
+                //$("#results_images_col3").empty();
 
                 console.log("ml_type " + ml_type);
                 console.log(stats);
                 for (let i = 0; i < stats.length; i++) {
                     let stat = stats[i];
                     var results_div;
-                    if (i % 3 === 0) {
+                    if (i % 2 === 0) {
                         results_div = results_div_col1;
-                    } else if (i % 3 === 1) {
-                        results_div = results_div_col2;
                     } else {
-                        results_div = results_div_col3;
+                        results_div = results_div_col2;
                     }
                     let model_dir = mlType_dir_dict[ml_type];
                     let file_dir = "./static/img/" + model_dir;
@@ -139,6 +161,8 @@ $(document).ready(function () {
                     } else if(ml_type == ML_TYPE_STATS_DONATIONS) {
                         handle_stats_don_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_STATS_VOTES) {
+                        handle_stats_votes_response(stat, results_div, i);
+                    } else if(ml_type == ML_TYPE_COUNTY) {
                         handle_stats_votes_response(stat, results_div, i);
                     }
                 }
