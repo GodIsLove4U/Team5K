@@ -7,7 +7,7 @@
   * Data Extracts: All CSV files holding raw data, before ETL process.
   * Data Model: Entity Relationship Diagrams (ERDs) related to data transformation.
   * Models: Jupyter Notebooks containing all machine learning algorithms, exploratory data analysis, and regression analysis code. Also includes files containing PNGs of resulting visualizations from analysis.
-  * Preso_Info: Files related to final presentation, including link to Google Slides [presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing).
+  * Preso_Info: All files related to final presentation and segment deliverables, including link to Google Slides [presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing).
     * Includes project deliverables for [Segment 2](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentTwoProjectInfo-Team5K.pdf) including information on
        -Data exploration
        -Data analysis
@@ -21,12 +21,7 @@
 
 ## Dataset Overview
 * For our analysis, we are using publicly available datasets that evaluate the following features:
-   * Crises
-     * 2000: Dotcom Bubble Burst
-     * 2001: 9/11
-     * 2006-2008: Housing Bubble
-     * 2007-2008: Financial Crisis
-     * 2020: COVID19
+   * Voter Information
    * Demographics
      * Urban/rural
      * Average age
@@ -42,25 +37,18 @@
      * Filter out years to build a model to predict how counties in the 6 states will perform
    * Party Classifiers: Democrat or Republican
 * Our datasets include:
-   * Campaign donations data during the dotcom bubble burst and the period prior (early 2000s data).
-   * Campaign donations data during the financial crisis and the period after (2008-2016 data).
-   * Campaign donations data prior to and during COVID19 (2016-2020 data).
    * Campaign donations aggregated in four year chunks (2000, 2004, 2008, 2012, 2016 and 2020). This will allow us to build a predictive model to determine how the county aggregate sum of each four year period impacts the number of actual votes received in the election year per county.
-   * COVID19 county-level infection data
    * County zipcodes
    * Committee Name, Party Affiliation, Committee ID Table Mapping
    * Zipcode to County Table Mapping
    * Data on Democratic and Republican candidates in battleground states (top congressional or gubernatorial candidates in each battleground state)
     
 ## Methodology and Approach
-  * By visualizing how crises between 2000 and 2020 (dotcom bubble, financial crisis, COVID19) have impacted campaign donations, we want to provide training data for our model in order to predict how political affiliations in battleground states (Arizona, Michigan, Pennsylvania, Florida, Wisconsin, North Carolina) swing between red and blue.
+  * By visualizing how political campaign donations between 2000 and 2020 have impacted election outcomes, we want to provide training data for our model in order to predict how political affiliations in battleground states (Arizona, Michigan, Pennsylvania, Florida, Wisconsin, North Carolina) swing between red and blue.
   * We will look at county level data in 6 battleground states between the years 2000-2020, and segment based on various demographic features to build a predictive model that indicates how constituents will choose to vote in this cycle of the presidential election.
   * To filter the data by ‘blue’ and ‘red’, we will pick prominent democrats and republicans in each state, showing whether people switches ‘sides’ during an election year in reaction to a major crisis event.
-  * We will create an additional predictive model for COVID19 by first analyzing county data in Florida (we choose Florida because it will offer the greatest number of data points), and expand the methodology to other states if we are successful.
   * Our approach will be to understand the nuances of campaign donations and major crises in the US (segment 1), clean and normalize the raw data in a number of databases (segment 2), load the data into databases and perform statistical and predictive analyses (segment 3) and create visualizations and dashboards to upload to a webpage (segment 4).
   * Some problem statements we may address include answering:
-    * Has COVID impacted if/how much voters are donating this year?
-    * How does donor behavior differ between COVID crisis vs other crises?
     * Have other major recession events impacted how much/how frequently/whether people choose to donate to presidential campaigns?
     * Is there a significant transfer of donations from the republican party to democratic during times of crisis or vice versa?
     * How do demographics (age, ethnicity, geographical delineations, employment status, employment, education, and party affiliation) in each county play into how constituents engage with donations?
