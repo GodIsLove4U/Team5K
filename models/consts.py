@@ -31,7 +31,9 @@ ELECTION_INTERVAL = 4
 #Total sum of donations per party per county
 MAJOR_PARTIES = ["democrat", "republican", "other"]
 #List of swing states to run the analysis on
-SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+#SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+SWING_STATES = ["AZ", "MI", "FL", "NC"]
+
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
