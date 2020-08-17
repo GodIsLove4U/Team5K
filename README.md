@@ -66,13 +66,6 @@
     * How do demographics (age, ethnicity, geographical delineations, employment status, employment, education, and party affiliation) in each county play into how constituents engage with donations?
     * Do these demographics have predictive power in presidential elections?
 
-## Communication Protocols
-
-  * Our team has committed to ongoing communication via Slack and [Coda](http://coda.io).
-  * We participate in standing Zoom sessions from 4-5PM on weekdays, 10am Saturdays, 12:30pm Sundays
-  * Our team communicates regularly, and uses Tuesday/Thursday breakout sessions to refine our machine learning model, ensure our database is correctly set-up, and review changes and commits to GitHub.
-  * Each member of the team has their own branch listed under their respective first names. In addition, we have a branch to store data files (data_storage) along with the master branch.
-
 ## Technology Stack
   * Our team is using the following tools to successfully collaborate and build our machine learning model:
     * Project Management: [Coda.io](http://coda.io)
