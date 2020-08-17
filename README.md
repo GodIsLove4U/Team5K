@@ -8,15 +8,13 @@
   * Data Model: Entity Relationship Diagrams (ERDs) related to data transformation.
   * Models: Jupyter Notebooks containing all machine learning algorithms, exploratory data analysis, and regression analysis code. Also includes files containing PNGs of resulting visualizations from analysis.
   * Preso_Info: All files related to final presentation and segment deliverables, including link to Google Slides [presentation](https://docs.google.com/presentation/d/1ijhyfkdBBYox_7o6rQUraLtBufkcBuDwIpVaxm5wSqs/edit?usp=sharing).
-    * Includes project deliverables for [Segment 3](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentThree%E2%80%93ProjectInfo.pdf) including information on
-       -Data exploration
-       -Data analysis
-       -Feature engineering
-       -Preprocessing
-       -Peer Review
-       -Final Dashboard Description
-       -Dashboard interactive elements
-       -Data sources
+   * Includes project deliverables for [Segment 3](https://github.com/GodIsLove4U/Team5K/blob/master/preso_info/SegmentThree%E2%80%93ProjectInfo.pdf) including information on
+    * Data exploration
+    * Data analysis
+    * Feature engineering
+    * Preprocessing
+    * Imaging and results generated from models
+    * Data sources
   * Views: HTML files related to building interactive dashboard.
 
 ## Dataset Overview
