@@ -20,6 +20,7 @@ db = SQLAlchemy(app)
 engine = create_engine(postgres_url)
 
 ML_TYPE_LR = "Linear_Regression"
+ML_TYPE_VOTES = "Votes"
 ML_TYPE_LOG = "Logistic_Regression"
 ML_TYPE_US = "Unsupervised"
 ML_TYPE_STATS_COUNTIES = "Stats_Counties"
@@ -28,6 +29,7 @@ ML_TYPE_STATS_VOTES = "Stats_Votes"
 
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
+TABLE_RES_VOTES = "res_votes"
 TABLE_AGG_COUNTY_DONORS = "agg_county_donors"
 TABLE_AGG_COUNTY_VOTES = "agg_county_votes"
 TABLE_RES_RF = "res_rf"
@@ -37,7 +39,7 @@ TABLE_RES_STATS_VOTES = "res_stats_voters"
 
 @app.route("/")
 def home():
-    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_STATS_COUNTIES, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
+    ml_types = ['', ML_TYPE_LR, ML_TYPE_VOTES, ML_TYPE_LOG, ML_TYPE_STATS_COUNTIES, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
@@ -61,6 +63,8 @@ def ml_type(ml_type=None):
         stats = query_res_stats_votes_sql()
     elif ml_type == ML_TYPE_STATS_COUNTIES:
         stats = query_res_counties_sql()
+    elif ml_type == ML_TYPE_VOTES:
+        stats = query_res_votes_sql()
 
     return jsonify({
         "ml_type": ml_type,
@@ -102,8 +106,10 @@ def query_filename_sql(table_name, type):
         model_dir = "county_cluster"
     elif type == 2:
         model_dir = "stats_votes"
-    else:
+    elif type == 3:
         model_dir = "stats_donation"
+    else:
+        model_dir = "votes"
 
     stats = []
     with engine.connect() as con:
@@ -121,6 +127,7 @@ def query_filename_sql(table_name, type):
 
     return stats
 
+
 def query_res_counties_sql():
     return query_filename_sql(TABLE_RES_COUNTIES, 1)
 
@@ -129,6 +136,10 @@ def query_res_stats_votes_sql():
 
 def query_res_stats_donations_sql():
     return query_filename_sql(TABLE_RES_STATS_DONATIONS, 3)
+
+def query_res_votes_sql():
+    #return query_filename_sql(TABLE_RES_COUNTIES, 4)
+    return get_file_paths("./static/img/votes/")
 
 def query_res_log_sql():
     print("query_res_log_sql")

@@ -1,4 +1,5 @@
 const ML_TYPE_LR = "Linear_Regression";
+const ML_TYPE_VOTES = "Votes";
 const ML_TYPE_LOG = "Logistic_Regression";
 const ML_TYPE_US = "Unsupervised";
 const ML_TYPE_COUNTY = "Stats_Counties";
@@ -7,6 +8,7 @@ const ML_TYPE_STATS_VOTES = "Stats_Votes";
 
 var mlType_dir_dict = {
     ML_TYPE_LR: "linear_regression",
+    ML_TYPE_VOTES: "votes",
     ML_TYPE_LOG: "logistic_regression",
     ML_TYPE_US: "unsupervised_ml",
     ML_TYPE_COUNTY: "county_cluster",
@@ -53,6 +55,14 @@ function handle_us_response(stat, results_div, i){
     let img_id = 'img'+i;
 
     let file_path = stat["file_path"];
+    append_img(file_path, results_div, img_id);
+}
+
+function handle_stats_filename_response2(stat, results_div, i){
+    console.log(stat);
+    let img_id = 'img'+i;
+    let file_path = stat["file_path"];
+    console.log(file_path);
     append_img(file_path, results_div, img_id);
 }
 
@@ -163,7 +173,9 @@ $(document).ready(function () {
                     } else if(ml_type == ML_TYPE_STATS_VOTES) {
                         handle_stats_votes_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_COUNTY) {
-                        handle_stats_votes_response(stat, results_div, i);
+                        handle_stats_counties_response(stat, results_div, i);
+                    } else if(ml_type == ML_TYPE_VOTES) {
+                        handle_stats_filename_response2(stat, results_div, i);
                     }
                 }
             },
