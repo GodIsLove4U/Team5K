@@ -51,26 +51,37 @@ def home():
 def get_res_votes(state):
     print(f"get_res_votes {state}")
 
-    table_name = f"res_votes_{state}"
+    table_name = f"res_votes_{state.lower()}"
     params_str = "*"
     query_str = f'SELECT {params_str} FROM "{table_name}";'
 
     stats = []
     total_blue = 0
     total_red = 0
+    total_other = 0
+    total_votes = 0
     with engine.connect() as con:
         rows = con.execute(query_str)
         for row in rows:
             stat = {}
             county_blue = row[1]
             county_red = row[2]
-            stat["predict_blue_votes_net"] = county_blue
-            stat["predict_red_votes_net"] = county_red
-            stat["state"] = row[3]
-            stat["county"] = row[4]
+            county_other = row[3]
+            county_votes = row[7]
+            stat["predict_blue_votes"] = county_blue
+            stat["predict_red_votes"] = county_red
+            stat["predict_other_votes"] = county_other
+            stat["predict_blue_votes_percent"] = row[4]
+            stat["predict_red_votes_percent"] = row[5]
+            stat["predict_other_votes_percent"] = row[6]
+            stat["total_votes_2016"] = county_votes
+            stat["state"] = row[8]
+            stat["county"] = row[9]
 
-            total_blue = total_blue + county_blue
-            total_red = total_red + county_red
+            total_blue += county_blue
+            total_red += county_red
+            total_other += county_other
+            total_votes += county_votes
 
             stats.append(stat)
 
@@ -78,6 +89,8 @@ def get_res_votes(state):
         "stats": stats,
         "total_blue": total_blue,
         "total_red": total_red,
+        "total_other": total_other,
+        "total_votes": total_votes
     }
     return state_dict
 
