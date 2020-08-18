@@ -60,6 +60,9 @@ def get_res_votes(state):
     total_red = 0
     total_other = 0
     total_votes = 0
+    total_blue_2016 = 0
+    total_red_2016 = 0
+    total_other_2016 = 0
     with engine.connect() as con:
         rows = con.execute(query_str)
         for row in rows:
@@ -67,13 +70,29 @@ def get_res_votes(state):
             county_blue = row[1]
             county_red = row[2]
             county_other = row[3]
+
+            county_blue_percent = row[4]
+            county_red_percent = row[5]
+            county_other_percent = row[6]
+
             county_votes = row[7]
             stat["predict_blue_votes"] = county_blue
             stat["predict_red_votes"] = county_red
             stat["predict_other_votes"] = county_other
-            stat["predict_blue_votes_percent"] = row[4]
-            stat["predict_red_votes_percent"] = row[5]
-            stat["predict_other_votes_percent"] = row[6]
+            stat["predict_blue_votes_percent"] = county_blue_percent
+            stat["predict_red_votes_percent"] = county_red_percent
+            stat["predict_other_votes_percent"] = county_other_percent
+
+            blue_2016 = county_votes * county_blue_percent
+            red_2016 = county_votes * county_red_percent
+            other_2016 = county_votes * county_other_percent
+            total_blue_2016 += blue_2016
+            total_red_2016 += red_2016
+            total_other_2016 += other_2016
+
+            stat["predict_blue_total_votes"] = blue_2016
+            stat["predict_red_total_votes"] = red_2016
+            stat["predict_other_total_votes"] = other_2016
             stat["total_votes_2016"] = county_votes
             stat["state"] = row[8]
             stat["county"] = row[9]
@@ -90,7 +109,10 @@ def get_res_votes(state):
         "total_blue": total_blue,
         "total_red": total_red,
         "total_other": total_other,
-        "total_votes": total_votes
+        "total_votes": total_votes,
+        "total_blue_2016": total_blue_2016,
+        "total_red_2016": total_red_2016,
+        "total_other_2016": total_other_2016
     }
     return state_dict
 
