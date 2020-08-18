@@ -123,6 +123,7 @@ def merge_cmtid_party(donor_df):
         "CIT": party_democrat,
         "CMP": party_democrat,
         "COM": party_democrat,
+        "D": party_democrat,
         "D/C": party_democrat,
         'DCG': party_democrat,
         "DEM": party_democrat,
@@ -173,6 +174,7 @@ def merge_cmtid_party(donor_df):
         "IAP": party_repub,
         "NDP": party_repub,
         "NJC": party_repub,
+        "R": party_repub,
         "RTL": party_repub,
         "TEA": party_repub,
         "UST": party_repub,
@@ -228,6 +230,9 @@ def merge_cmtid_party(donor_df):
     cmte_party_map.update(cmte_blue_map)
     cmte_party_map.update(cmte_red_map)
     cmte_party_map.update(cmte_other_map)
+    #Uppercase the column so it properly maps
+
+    donor_df['CMTE_PTY_AFFILIATION'] = donor_df['CMTE_PTY_AFFILIATION'].str.upper()
 
     #Map from party code to dem/rep and have other party as default
     donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_not_found).astype(str)

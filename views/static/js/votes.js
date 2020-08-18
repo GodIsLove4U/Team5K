@@ -1,28 +1,8 @@
-const ML_TYPE_LR = "Linear_Regression";
-const ML_TYPE_VOTES = "Votes";
-const ML_TYPE_LOG = "Logistic_Regression";
-const ML_TYPE_US = "Unsupervised";
-const ML_TYPE_COUNTY = "Stats_Counties";
-const ML_TYPE_STATS_DONATIONS = "Stats_Donations";
-const ML_TYPE_STATS_VOTES = "Stats_Votes";
-
-var mlType_dir_dict = {
-    ML_TYPE_LR: "linear_regression",
-    ML_TYPE_VOTES: "votes",
-    ML_TYPE_LOG: "logistic_regression",
-    ML_TYPE_US: "unsupervised_ml",
-    ML_TYPE_COUNTY: "county_cluster",
-    ML_TYPE_STATS_DONATIONS: "stats_donation",
-    ML_TYPE_STATS_VOTES: "stats_votes"
-};
-
 function append_span(results_div, span_id, str){
-    console.log(str);
     $('<span />').html(str).appendTo(results_div);
 }
 
 function append_img(file_path, results_div, img_id){
-    console.log(file_path);
     $('<img />').attr({
         'id': img_id,
         'src': file_path,
@@ -51,7 +31,6 @@ function handle_lr_response(results_div, stat, file_dir, i){
 }
 
 function handle_us_response(stat, results_div, i){
-    console.log(stat);
     let img_id = 'img'+i;
 
     let file_path = stat["file_path"];
@@ -96,7 +75,9 @@ const LIGHT_BLUE_HEX = "#ADD8E6";
 const LIGHT_RED_HEX = "#FFCCCB";
 
 var rowIdx = 0;
-function add_row_to_table(county, predicted_blue, predicted_red) {
+function add_row_to_table(county, predict_blue_votes, predict_red_votes, predict_other_votes, predict_blue_votes_percent, predict_red_votes_percent, predict_other_votes_percent, total_votes_2016) {
+    county, predict_blue_votes, predict_red_votes, predict_other_votes, predict_blue_votes_percent, predict_red_votes_percent, predict_other_votes_percent, total_votes_2016
+
     let county_td = build_td(county);
     let blue_td = build_td(format_int(predicted_blue));
     let red_td = build_td(format_int(predicted_red));
@@ -203,11 +184,18 @@ $(document).ready(function () {
                 table_votes += "<thead><tr><th>County</th><th>Predicted_Blue_Votes</th><th>Predicted_Red_Votes</th></tr></thead>"
                 for (let i = 0; i < stats.length; i++) {
                     let stat = stats[i];
-                    let predict_blue_votes_net = stat["predict_blue_votes_net"];
-                    let predict_red_votes_net = stat["predict_red_votes_net"];
+                    let predict_blue_votes = stat["predict_blue_votes"];
+                    let predict_red_votes = stat["predict_red_votes"];
+                    let predict_other_votes = stat["predict_other_votes"];
+
+                    let predict_blue_votes_percent = stat["predict_blue_votes_percent"];
+                    let predict_red_votes_percent = stat["predict_red_votes_percent"];
+                    let predict_other_votes_percent = stat["predict_other_votes_percent"];
+
+                    let total_votes_2016 = stat["total_votes_2016"];
                     let county = stat["county"];
 
-                    let tr_row = add_row_to_table(county, predict_blue_votes_net, predict_red_votes_net);
+                    let tr_row = add_row_to_table(county, predict_blue_votes, predict_red_votes, predict_other_votes, predict_blue_votes_percent, predict_red_votes_percent, predict_other_votes_percent, total_votes_2016);
                     table_votes += tr_row;
                 }
                 table_votes += "</table>";

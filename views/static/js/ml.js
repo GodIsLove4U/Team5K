@@ -1,28 +1,28 @@
 const ML_TYPE_LR = "Linear_Regression";
-const ML_TYPE_VOTES = "Votes";
 const ML_TYPE_LOG = "Logistic_Regression";
+const ML_TYPE_RF = "Random_Forest";
 const ML_TYPE_US = "Unsupervised";
+const ML_TYPE_VOTES = "Votes";
 const ML_TYPE_COUNTY = "Stats_Counties";
 const ML_TYPE_STATS_DONATIONS = "Stats_Donations";
 const ML_TYPE_STATS_VOTES = "Stats_Votes";
 
 var mlType_dir_dict = {
-    ML_TYPE_LR: "linear_regression",
-    ML_TYPE_VOTES: "votes",
-    ML_TYPE_LOG: "logistic_regression",
-    ML_TYPE_US: "unsupervised_ml",
-    ML_TYPE_COUNTY: "county_cluster",
-    ML_TYPE_STATS_DONATIONS: "stats_donation",
-    ML_TYPE_STATS_VOTES: "stats_votes"
+    "Linear_Regression": "linear_regression",
+    "Votes": "votes",
+    "Random_Forest": "random_forest",
+    "Logistic_Regression": "logistic_regression",
+    "Unsupervised": "unsupervised_ml",
+    "Stats_Counties": "county_cluster",
+    "Stats_Donations": "stats_donation",
+    "Stats_Votes": "stats_votes"
 };
 
 function append_span(results_div, span_id, str){
-    console.log(str);
     $('<span />').html(str).appendTo(results_div);
 }
 
 function append_img(file_path, results_div, img_id){
-    console.log(file_path);
     $('<img />').attr({
         'id': img_id,
         'src': file_path,
@@ -51,7 +51,6 @@ function handle_lr_response(results_div, stat, file_dir, i){
 }
 
 function handle_us_response(stat, results_div, i){
-    console.log(stat);
     let img_id = 'img'+i;
 
     let file_path = stat["file_path"];
@@ -149,12 +148,13 @@ $(document).ready(function () {
                         results_div = results_div_col2;
                     }
                     let model_dir = mlType_dir_dict[ml_type];
-                    print(mlType_dir_dict)
                     let file_dir = "./static/img/" + model_dir;
-
+                    
                     if(ml_type == ML_TYPE_LR) {
                         handle_lr_response(results_div, stat, file_dir, i);
                     } else if(ml_type == ML_TYPE_LOG) {
+                        handle_log_response(results_div, stat, file_dir, i);
+                    } else if(ml_type == ML_TYPE_RF) {
                         handle_log_response(results_div, stat, file_dir, i);
                     } else if(ml_type == ML_TYPE_US) {
                         handle_us_response(stat, results_div, i);

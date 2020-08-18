@@ -22,6 +22,7 @@ engine = create_engine(postgres_url)
 ML_TYPE_LR = "Linear_Regression"
 ML_TYPE_VOTES = "Votes"
 ML_TYPE_LOG = "Logistic_Regression"
+ML_TYPE_RF = "Random_Forest"
 ML_TYPE_US = "Unsupervised"
 ML_TYPE_STATS_COUNTIES = "Stats_Counties"
 ML_TYPE_STATS_DONATIONS = "Stats_Donations"
@@ -29,10 +30,10 @@ ML_TYPE_STATS_VOTES = "Stats_Votes"
 
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
+TABLE_RES_RF = "res_rf"
 TABLE_RES_VOTES = "res_votes"
 TABLE_AGG_COUNTY_DONORS = "agg_county_donors"
 TABLE_AGG_COUNTY_VOTES = "agg_county_votes"
-TABLE_RES_RF = "res_rf"
 TABLE_RES_COUNTIES = "res_counties"
 TABLE_RES_STATS_DONATIONS = "res_stats_donations"
 TABLE_RES_STATS_VOTES = "res_stats_voters"
@@ -41,7 +42,7 @@ SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
 
 @app.route("/")
 def home():
-    ml_types = ['', ML_TYPE_LR, ML_TYPE_VOTES, ML_TYPE_LOG, ML_TYPE_STATS_COUNTIES, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
+    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_RF, ML_TYPE_US, ML_TYPE_VOTES, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
@@ -61,8 +62,6 @@ def get_res_votes(state):
         rows = con.execute(query_str)
         for row in rows:
             stat = {}
-            print("row = ")
-            print(row)
             county_blue = row[1]
             county_red = row[2]
             stat["predict_blue_votes_net"] = county_blue
@@ -103,11 +102,12 @@ def ml_type(ml_type=None):
     #print("ml_type")
     #print(ml_type)
     
-    filenames = []
     if ml_type == ML_TYPE_LR:
         stats = query_res_lr_sql()
     elif ml_type == ML_TYPE_LOG:
         stats = query_res_log_sql()
+    elif ml_type == ML_TYPE_RF:
+        stats = query_res_rf_sql()
     elif ml_type == ML_TYPE_US:
         stats = query_res_us_sql()
     elif ml_type == ML_TYPE_STATS_DONATIONS:
@@ -194,12 +194,18 @@ def query_res_votes_sql():
     #return query_filename_sql(TABLE_RES_COUNTIES, 4)
     return get_file_paths("./static/img/votes/")
 
+def query_res_rf_sql():
+    return query_log_sql(TABLE_RES_RF)
+
 def query_res_log_sql():
-    print("query_res_log_sql")
+    return query_log_sql(TABLE_RES_LOG)
+
+def query_log_sql(table_name):
+    print("query_log_sql")
 
     params_str = "*"
     #params_str = "(accuracy,recall,precision,f1,sml_param,state,file_name)"
-    query_str = f"SELECT * FROM {TABLE_RES_LOG};"
+    query_str = f"SELECT * FROM {table_name};"
 
     stats = []
     with engine.connect() as con:
@@ -221,7 +227,7 @@ def query_res_log_sql():
     return stats
 
 def query_res_us_sql():
-    print("query_res_log_sql")
+    print("query_res_us_sql")
 
     params_str = "(accuracy,recall,precision,f1,sml_param,state)"
     query_str = f"SELECT * FROM {TABLE_RES_LR};"
