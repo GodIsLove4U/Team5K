@@ -37,12 +37,65 @@ TABLE_RES_COUNTIES = "res_counties"
 TABLE_RES_STATS_DONATIONS = "res_stats_donations"
 TABLE_RES_STATS_VOTES = "res_stats_voters"
 
+SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+
 @app.route("/")
 def home():
     ml_types = ['', ML_TYPE_LR, ML_TYPE_VOTES, ML_TYPE_LOG, ML_TYPE_STATS_COUNTIES, ML_TYPE_US, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
+    )
+
+def get_res_votes(state):
+    print(f"get_res_votes {state}")
+
+    table_name = f"res_votes_{state}"
+    params_str = "*"
+    query_str = f'SELECT {params_str} FROM "{table_name}";'
+
+    stats = []
+    total_blue = 0
+    total_red = 0
+    with engine.connect() as con:
+        rows = con.execute(query_str)
+        for row in rows:
+            stat = {}
+            print("row = ")
+            print(row)
+            county_blue = row[1]
+            county_red = row[2]
+            stat["predict_blue_votes_net"] = county_blue
+            stat["predict_red_votes_net"] = county_red
+            stat["state"] = row[3]
+            stat["county"] = row[4]
+
+            total_blue = total_blue + county_blue
+            total_red = total_red + county_red
+
+            stats.append(stat)
+
+    state_dict = {
+        "stats": stats,
+        "total_blue": total_blue,
+        "total_red": total_red,
+    }
+    return state_dict
+
+@app.route("/votes/<state>")
+def votes_state(state=None):
+    state_dict = get_res_votes(state)
+
+    return jsonify({
+        "state": state,
+        "state_dict": state_dict
+    })
+
+@app.route("/votes")
+def votes():
+    return render_template(
+        "votes.html",
+        states= SWING_STATES
     )
 
 @app.route("/ml/<ml_type>", methods=['POST', 'GET'])

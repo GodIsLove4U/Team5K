@@ -87,6 +87,36 @@ function handle_stats_counties_response(stat, results_div, i){
     handle_stats_filename_response(stat, results_div, i);
 }
 
+function build_td(val){
+    let td_str = "<td>" + String(val) + "</td>";
+    return td_str;
+}
+
+const LIGHT_BLUE_HEX = "#ADD8E6";
+const LIGHT_RED_HEX = "#FFCCCB";
+
+var rowIdx = 0;
+function add_row_to_table(county, predicted_blue, predicted_red) {
+    let county_td = build_td(county);
+    let blue_td = build_td(format_int(predicted_blue));
+    let red_td = build_td(format_int(predicted_red));
+
+    let color_str = "";
+    if (predicted_blue > predicted_red) {
+        color_str = LIGHT_BLUE_HEX;
+    } else {
+        color_str = LIGHT_RED_HEX;
+    }
+
+    let tr_row = '<tr style="background-color:' + color_str + '">';
+    tr_row += county_td;
+    tr_row += blue_td;
+    tr_row += red_td;
+    tr_row += "</tr>";
+
+    return tr_row;
+}
+
 function handle_log_response(results_div, stat, file_dir, i){
     let accuracy = stat["accuracy"];
     let recall = stat["recall"];
@@ -116,58 +146,72 @@ function handle_log_response(results_div, stat, file_dir, i){
     append_img(file_path, results_div, img_id);
 }
 
+function commaSeparateNumber(val){
+    while (/(\d+)(\d{3})/.test(val.toString())){
+        val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+}
+
+function clear_stats(){
+    $("#total_red").empty();
+    $("#total_blue").empty();
+    $("#votes_table_div").empty();
+}
+
+function format_int(float_val){
+    let int_val = parseInt(float_val);
+    let format_val = commaSeparateNumber(int_val);
+
+    return format_val;
+}
+
 $(document).ready(function () {
     $("#submitBtn").click(function () {
         //Get mltype from the dropdown
         let ml_type = $("#mlType").val();
         //Pass in the ML type to the GET URL
-        let ml_url = "/ml/" + ml_type;
+        let ml_url = "/votes/" + ml_type;
         //Ajax call
         $.ajax({
             type: "GET", url: ml_url,
             success: function (data, text) {
+                clear_stats();
+
                 console.log("success");
                 console.log(data);
                 //Get elements from data
-                let ml_type = data["ml_type"];
-                let stats = data["stats"];
+                let ml_type = data["state"];
+                let state_dict = data["state_dict"];
+                let stats = state_dict["stats"];
+                let total_blue = format_int(state_dict["total_blue"]);
+                let total_red = format_int(state_dict["total_red"]);
 
-                //Get the div columns to add image grid to
-                let results_div_col1 = $("#results_images_col1");
-                let results_div_col2 = $("#results_images_col2");
-                $("#results_images_col1").empty();
-                $("#results_images_col2").empty();
+                if(total_blue > total_red) {
+                    $("#predicted_winner").text("Democrat");
+                } else if(total_blue < total_red) {
+                    $("#predicted_winner").text("Republican");
+                } else {
+                    $("#predicted_winner").text("Tie!");
+                }
+
+                $("#total_red").text(total_red);
+                $("#total_blue").text(total_blue);
 
                 console.log("ml_type " + ml_type);
-                console.log(stats);
+                let table_votes = "<table>";
+                table_votes += "<thead><tr><th>County</th><th>Predicted_Blue_Votes</th><th>Predicted_Red_Votes</th></tr></thead>"
                 for (let i = 0; i < stats.length; i++) {
                     let stat = stats[i];
-                    var results_div;
-                    if (i % 2 === 0) {
-                        results_div = results_div_col1;
-                    } else {
-                        results_div = results_div_col2;
-                    }
-                    let model_dir = mlType_dir_dict[ml_type];
-                    print(mlType_dir_dict)
-                    let file_dir = "./static/img/" + model_dir;
+                    let predict_blue_votes_net = stat["predict_blue_votes_net"];
+                    let predict_red_votes_net = stat["predict_red_votes_net"];
+                    let county = stat["county"];
 
-                    if(ml_type == ML_TYPE_LR) {
-                        handle_lr_response(results_div, stat, file_dir, i);
-                    } else if(ml_type == ML_TYPE_LOG) {
-                        handle_log_response(results_div, stat, file_dir, i);
-                    } else if(ml_type == ML_TYPE_US) {
-                        handle_us_response(stat, results_div, i);
-                    } else if(ml_type == ML_TYPE_STATS_DONATIONS) {
-                        handle_stats_don_response(stat, results_div, i);
-                    } else if(ml_type == ML_TYPE_STATS_VOTES) {
-                        handle_stats_votes_response(stat, results_div, i);
-                    } else if(ml_type == ML_TYPE_COUNTY) {
-                        handle_stats_counties_response(stat, results_div, i);
-                    } else if(ml_type == ML_TYPE_VOTES) {
-                        handle_stats_filename_response2(stat, results_div, i);
-                    }
+                    let tr_row = add_row_to_table(county, predict_blue_votes_net, predict_red_votes_net);
+                    table_votes += tr_row;
                 }
+                table_votes += "</table>";
+                $('#votes_table_div').append(table_votes);
             },
             error: function (request, status, error) {
                 console.log("fail");
