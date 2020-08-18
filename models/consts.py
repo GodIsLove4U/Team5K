@@ -31,8 +31,8 @@ ELECTION_INTERVAL = 4
 #Total sum of donations per party per county
 MAJOR_PARTIES = ["democrat", "republican", "other"]
 #List of swing states to run the analysis on
-#SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
-SWING_STATES = ["AZ", "MI", "FL", "NC"]
+SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+#SWING_STATES = ["AZ", "MI", "FL", "NC"]
 
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
@@ -231,7 +231,9 @@ def merge_cmtid_party(donor_df):
     cmte_party_map.update(cmte_red_map)
     cmte_party_map.update(cmte_other_map)
     #Uppercase the column so it properly maps
-
+    #Drop null values of the committee code
+    donor_df = donor_df.dropna(subset=['CMTE_PTY_AFFILIATION'])
+    #Set the code to uppercase
     donor_df['CMTE_PTY_AFFILIATION'] = donor_df['CMTE_PTY_AFFILIATION'].str.upper()
 
     #Map from party code to dem/rep and have other party as default
