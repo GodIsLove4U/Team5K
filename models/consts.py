@@ -32,7 +32,6 @@ ELECTION_INTERVAL = 4
 MAJOR_PARTIES = ["democrat", "republican", "other"]
 #List of swing states to run the analysis on
 SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
-#SWING_STATES = ["AZ", "MI", "FL", "NC"]
 
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
