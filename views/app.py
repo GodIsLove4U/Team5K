@@ -55,8 +55,6 @@ def get_res_votes(state):
     params_str = "*"
     query_str = f'SELECT {params_str} FROM "{table_name}";'
 
-    print(f"back from query")
-
     stats = []
     total_blue = 0
     total_red = 0
@@ -72,12 +70,11 @@ def get_res_votes(state):
             county_blue = row[1]
             county_red = row[2]
             county_other = row[3]
-
             county_blue_percent = row[4]
             county_red_percent = row[5]
             county_other_percent = row[6]
-
             county_votes = row[7]
+
             stat["predict_blue_votes"] = county_blue
             stat["predict_red_votes"] = county_red
             stat["predict_other_votes"] = county_other
@@ -85,6 +82,7 @@ def get_res_votes(state):
             stat["predict_red_votes_percent"] = county_red_percent
             stat["predict_other_votes_percent"] = county_other_percent
 
+            #Calculate the number of expected votes per party based on percentage and total votes from 2016
             blue_2016 = county_votes * county_blue_percent
             red_2016 = county_votes * county_red_percent
             other_2016 = county_votes * county_other_percent
@@ -99,6 +97,7 @@ def get_res_votes(state):
             stat["state"] = row[8]
             stat["county"] = row[9]
 
+            #Increment the totals for the state
             total_blue += county_blue
             total_red += county_red
             total_other += county_other
