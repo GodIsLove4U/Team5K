@@ -55,6 +55,8 @@ def get_res_votes(state):
     params_str = "*"
     query_str = f'SELECT {params_str} FROM "{table_name}";'
 
+    print(f"back from query")
+
     stats = []
     total_blue = 0
     total_red = 0
