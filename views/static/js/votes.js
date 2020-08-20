@@ -100,7 +100,15 @@ function add_row_to_table(county, predict_blue_votes, predict_red_votes, predict
     return tr_row;
 }
 
-function add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016) {
+var STATE_ELECTORAL_VOTES = {
+    "AZ": 11,
+    "FL": 29,
+    "NC": 15,
+    "PA": 20,
+    "WI": 10,
+    "MI": 16
+};
+function add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016, electoral_votes) {
     let color_str = "";
     if (total_blue > total_red) {
         color_str = LIGHT_BLUE_HEX;
@@ -109,6 +117,7 @@ function add_summary_row_to_table(state, total_blue, total_red, total_other, tot
     }
 
     let state_td = build_td(state);
+    let electoral_votes_td = build_td(format_int(electoral_votes));
     let total_blue_td = build_td(format_int(total_blue));
     let total_red_td = build_td(format_int(total_red));
     let total_other_td = build_td(format_int(total_other));
@@ -119,6 +128,7 @@ function add_summary_row_to_table(state, total_blue, total_red, total_other, tot
 
     let tr_row = '<tr style="background-color:' + color_str + '">';
     tr_row += state_td;
+    tr_row += electoral_votes_td;
     tr_row += total_blue_td;
     tr_row += total_red_td;
     tr_row += total_other_td;
@@ -195,9 +205,11 @@ function format_float(float_val){
 
 function handle_summary_response(data) {
     let table_votes = "<table>";
-    table_votes += "<thead><tr><th>State</th><th>Blue</th><th>Red</th><th>Other</th><th>Total Votes</th><th>Red 2016</th><th>Blue 2016</th><th>Other 2016</th></tr></thead>";
+    table_votes += "<thead><tr><th>State</th><th>Electoral Votes</th><th>Blue</th><th>Red</th><th>Other</th><th>Total Votes</th><th>Red 2016</th><th>Blue 2016</th><th>Other 2016</th></tr></thead>";
 
     let stats = data["stats"];
+    let total_electoral_red = 0;
+    let total_electoral_blue = 0;
     for (let i = 0; i < stats.length; i++) {
         let stat = stats[i];
         let total_blue = stat["total_blue"];
@@ -209,13 +221,26 @@ function handle_summary_response(data) {
         let total_other_2016 = stat["total_other_2016"];
         let state = stat["state"];
 
-        let tr_row = add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016);
+        let electoral_votes = STATE_ELECTORAL_VOTES[state]
+        if(total_blue > total_red) {
+            total_electoral_blue += electoral_votes;
+        } else {
+            total_electoral_red += electoral_votes;
+        }
+
+        let tr_row = add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016, electoral_votes);
         table_votes += tr_row;
     }
 
     table_votes += "</table>";
 
     $('#votes_table_div').append(table_votes);
+
+    let red_str = total_electoral_red.toString();
+    let blue_str = total_electoral_blue.toString();
+
+    $("#predicted_winner_2016").text(red_str);
+    $("#predicted_winner").text(blue_str);
 }
 
 function summary_call(ml_url) {
