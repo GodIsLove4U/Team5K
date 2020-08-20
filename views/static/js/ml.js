@@ -50,13 +50,6 @@ function handle_lr_response(results_div, stat, file_dir, i){
     append_img(file_path, results_div, img_id);
 }
 
-function handle_us_response(stat, results_div, i){
-    let img_id = 'img'+i;
-
-    let file_path = stat["file_path"];
-    append_img(file_path, results_div, img_id);
-}
-
 function handle_stats_filename_response2(stat, results_div, i){
     let img_id = 'img'+i;
     let file_path = stat["file_path"];
@@ -72,6 +65,10 @@ function handle_stats_filename_response(stat, results_div, i){
 
     append_span(results_div, span_id,title);
     append_img(file_path, results_div, img_id);
+}
+
+function handle_us_response(stat, results_div, i){
+    handle_stats_filename_response(stat, results_div, i);
 }
 
 function handle_stats_don_response(stat, results_div, i){

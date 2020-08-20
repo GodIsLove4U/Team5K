@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 from flask import jsonify
 from os import listdir
 from os.path import isfile, join
+
+meta = MetaData()
 
 postgres_db = {}
 postgres_db['host'] = '34.67.52.115'
@@ -19,6 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = postgres_url
 db = SQLAlchemy(app)
 engine = create_engine(postgres_url)
 
+ML_TYPE_SUMMARY = "Summary"
 ML_TYPE_LR = "Linear_Regression"
 ML_TYPE_VOTES = "Votes"
 ML_TYPE_LOG = "Logistic_Regression"
@@ -37,8 +40,9 @@ TABLE_AGG_COUNTY_VOTES = "agg_county_votes"
 TABLE_RES_COUNTIES = "res_counties"
 TABLE_RES_STATS_DONATIONS = "res_stats_donations"
 TABLE_RES_STATS_VOTES = "res_stats_voters"
+TABLE_PRED_VOTES = "pred_votes"
 
-SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+SWING_STATES = ["Summary", "AZ", "MI", "FL", "NC", "PA", "WI"]
 
 @app.route("/")
 def home():
@@ -47,6 +51,21 @@ def home():
         "index.html",
         ml_types=ml_types
     )
+
+def create_pred_table():
+    Table(
+        TABLE_PRED_VOTES, meta,
+        Column('id', Integer, primary_key = True),
+        Column('total_blue', Integer),
+        Column('total_red', Integer),
+        Column('total_other', Integer),
+        Column('total_votes', Integer),
+        Column('total_blue_2016', Integer),
+        Column('total_red_2016', Integer),
+        Column('total_other_2016', Integer),
+        Column('state', String(32), unique=True),
+    )
+    meta.create_all(engine)
 
 def get_res_votes(state):
     print(f"get_res_votes {state}")
@@ -74,6 +93,8 @@ def get_res_votes(state):
             county_red_percent = row[5]
             county_other_percent = row[6]
             county_votes = row[7]
+            stat["state"] = state
+            stat["county"] = row[9]
 
             stat["predict_blue_votes"] = county_blue
             stat["predict_red_votes"] = county_red
@@ -94,8 +115,6 @@ def get_res_votes(state):
             stat["predict_red_total_votes"] = red_2016
             stat["predict_other_total_votes"] = other_2016
             stat["total_votes_2016"] = county_votes
-            stat["state"] = row[8]
-            stat["county"] = row[9]
 
             #Increment the totals for the state
             total_blue += county_blue
@@ -104,6 +123,8 @@ def get_res_votes(state):
             total_votes += county_votes
 
             stats.append(stat)
+
+    insert_pred_sql(total_blue, total_red, total_other, total_votes, total_blue_2016, total_red_2016, total_other_2016, state)
 
     state_dict = {
         "stats": stats,
@@ -119,12 +140,17 @@ def get_res_votes(state):
 
 @app.route("/votes/<state>")
 def votes_state(state=None):
-    state_dict = get_res_votes(state)
-
-    return jsonify({
-        "state": state,
-        "state_dict": state_dict
-    })
+    if state == ML_TYPE_SUMMARY:
+        stats = query_summary_sql()
+        return jsonify({
+            "stats": stats
+        })
+    else:
+        state_dict = get_res_votes(state)
+        return jsonify({
+            "state": state,
+            "state_dict": state_dict
+        })
 
 @app.route("/votes")
 def votes():
@@ -135,9 +161,6 @@ def votes():
 
 @app.route("/ml/<ml_type>", methods=['POST', 'GET'])
 def ml_type(ml_type=None):
-    #print("ml_type")
-    #print(ml_type)
-    
     if ml_type == ML_TYPE_LR:
         stats = query_res_lr_sql()
     elif ml_type == ML_TYPE_LOG:
@@ -216,7 +239,6 @@ def query_filename_sql(table_name, type):
 
     return stats
 
-
 def query_res_counties_sql():
     return query_filename_sql(TABLE_RES_COUNTIES, 1)
 
@@ -229,6 +251,52 @@ def query_res_stats_donations_sql():
 def query_res_votes_sql():
     #return query_filename_sql(TABLE_RES_COUNTIES, 4)
     return get_file_paths("./static/img/votes/")
+
+def insert_pred_sql(total_blue, total_red, total_other, total_votes, total_blue_2016, total_red_2016, total_other_2016, state):
+    print("insert_pred_sql")
+
+    total_blue = round(total_blue)
+    total_red = round(total_red)
+    total_other = round(total_other)
+    total_votes = round(total_votes)
+    total_blue_2016 = round(total_blue_2016)
+    total_red_2016 = round(total_red_2016)
+    total_other_2016 = round(total_other_2016)
+    insert_str = f"INSERT INTO {TABLE_PRED_VOTES} (total_blue, total_red, total_other, total_votes, total_blue_2016, total_red_2016, total_other_2016, state) VALUES ({total_blue},{total_red},{total_other},{total_votes},{total_blue_2016},{total_red_2016},{total_other_2016},'{state}');"
+    update_str = f"UPDATE {TABLE_PRED_VOTES} SET total_blue = {total_blue}, total_red={total_red}, total_other={total_other}, total_votes={total_votes}, total_blue_2016={total_blue_2016}, total_red_2016={total_red_2016}, total_other_2016={total_other_2016} WHERE state='{state}';"
+
+    print("About to connect")
+    with engine.connect() as con:
+        try:
+            res = con.execute(insert_str)
+        except:
+            res = con.execute(update_str)
+
+def query_summary_sql():
+    print("query_summary_sql")
+
+    params_str = "*"
+    query_str = f"SELECT {params_str} FROM {TABLE_PRED_VOTES};"
+
+    stats = []
+    with engine.connect() as con:
+        rows = con.execute(query_str)
+        for row in rows:
+            stat = {}
+            print("row = ")
+            print(row)
+            stat["total_blue"] = row[1]
+            stat["total_red"] = row[2]
+            stat["total_other"] = row[3]
+            stat["total_votes"] = row[4]
+            stat["total_blue_2016"] = row[5]
+            stat["total_red_2016"] = row[6]
+            stat["total_other_2016"] = row[7]
+            stat["state"] = row[8]
+
+            stats.append(stat)
+
+    return stats
 
 def query_res_rf_sql():
     return query_log_sql(TABLE_RES_RF)
@@ -264,27 +332,7 @@ def query_log_sql(table_name):
 
 def query_res_us_sql():
     print("query_res_us_sql")
-
-    params_str = "(accuracy,recall,precision,f1,sml_param,state)"
-    query_str = f"SELECT * FROM {TABLE_RES_LR};"
-
-    stats = []
-    with engine.connect() as con:
-        rows = con.execute(query_str)
-        for row in rows:
-            stat = {}
-            print("row = ")
-            print(row)
-            stat["accuracy"] = row[1]
-            stat["recall"] = row[2]
-            stat["precision"] = row[3]
-            stat["f1"] = row[4]
-            stat["sml_param"] = row[5]
-            stat["state"] = row[6]
-
-            stats.append(stat)
-
-        return stats
+    return get_file_paths("./static/img/unsupervised_ml/")
 
 def get_dir_filenames(file_dir):
     filenames = [f for f in listdir(file_dir) if isfile(join(file_dir, f))]

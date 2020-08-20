@@ -30,19 +30,6 @@ function handle_lr_response(results_div, stat, file_dir, i){
     append_img(file_path, results_div, img_id);
 }
 
-function handle_us_response(stat, results_div, i){
-    let img_id = 'img'+i;
-
-    let file_path = stat["file_path"];
-    append_img(file_path, results_div, img_id);
-}
-
-function handle_stats_filename_response2(stat, results_div, i){
-    let img_id = 'img'+i;
-    let file_path = stat["file_path"];
-    append_img(file_path, results_div, img_id);
-}
-
 function handle_stats_filename_response(stat, results_div, i){
     let img_id = 'img'+i;
     let span_id = 'span'+i;
@@ -113,6 +100,37 @@ function add_row_to_table(county, predict_blue_votes, predict_red_votes, predict
     return tr_row;
 }
 
+function add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016) {
+    let color_str = "";
+    if (total_blue > total_red) {
+        color_str = LIGHT_BLUE_HEX;
+    } else {
+        color_str = LIGHT_RED_HEX;
+    }
+
+    let state_td = build_td(state);
+    let total_blue_td = build_td(format_int(total_blue));
+    let total_red_td = build_td(format_int(total_red));
+    let total_other_td = build_td(format_int(total_other));
+    let total_votes_td = build_td(format_int(total_votes));
+    let total_red_2016_td = build_td(format_int(total_red_2016));
+    let total_blue_2016_td = build_td(format_int(total_blue_2016));
+    let total_other_2016_td = build_td(format_int(total_other_2016));
+
+    let tr_row = '<tr style="background-color:' + color_str + '">';
+    tr_row += state_td;
+    tr_row += total_blue_td;
+    tr_row += total_red_td;
+    tr_row += total_other_td;
+    tr_row += total_votes_td;
+    tr_row += total_red_2016_td;
+    tr_row += total_blue_2016_td;
+    tr_row += total_other_2016_td;
+    tr_row += "</tr>";
+
+    return tr_row;
+}
+
 function handle_log_response(results_div, stat, file_dir, i){
     let accuracy = stat["accuracy"];
     let recall = stat["recall"];
@@ -175,96 +193,148 @@ function format_float(float_val){
     return float_str;
 }
 
+function handle_summary_response(data) {
+    let table_votes = "<table>";
+    table_votes += "<thead><tr><th>State</th><th>Blue</th><th>Red</th><th>Other</th><th>Total Votes</th><th>Red 2016</th><th>Blue 2016</th><th>Other 2016</th></tr></thead>";
+
+    let stats = data["stats"];
+    for (let i = 0; i < stats.length; i++) {
+        let stat = stats[i];
+        let total_blue = stat["total_blue"];
+        let total_red = stat["total_red"];
+        let total_other = stat["total_other"];
+        let total_votes = stat["total_votes"];
+        let total_red_2016 = stat["total_red_2016"];
+        let total_blue_2016 = stat["total_blue_2016"];
+        let total_other_2016 = stat["total_other_2016"];
+        let state = stat["state"];
+
+        let tr_row = add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016);
+        table_votes += tr_row;
+    }
+
+    table_votes += "</table>";
+
+    $('#votes_table_div').append(table_votes);
+}
+
+function summary_call(ml_url) {
+    //Ajax call
+    $.ajax({
+        type: "GET", url: ml_url,
+        success: function (data, text) {
+            clear_stats();
+
+            console.log("success");
+            console.log(data);
+
+            handle_summary_response(data);
+        },
+        error: function (request, status, error) {
+            console.log("fail");
+            alert(request.responseText);
+        }
+    });
+}
+
+function ml_call(ml_url) {
+    //Ajax call
+    $.ajax({
+        type: "GET", url: ml_url,
+        success: function (data, text) {
+            clear_stats();
+
+            console.log("success");
+            console.log(data);
+
+            //Get elements from data
+            let ml_type = data["state"];
+            let state_dict = data["state_dict"];
+            let stats = state_dict["stats"];
+
+            let total_blue_orig = state_dict["total_blue"];
+            let total_red_orig = state_dict["total_red"];
+            let total_other_orig = state_dict["total_other"];
+
+            let total_blue_2016 = state_dict["total_blue_2016"];
+            let total_red_2016 = state_dict["total_red_2016"];
+            let total_other_2016 = state_dict["total_other_2016"];
+
+            $("#total_blue_2016").text(format_int(total_blue_2016));
+            $("#total_red_2016").text(format_int(total_red_2016));
+            $("#total_other_2016").text(format_int(total_other_2016));
+            if(total_blue_2016 > total_red_2016) {
+                $("#predicted_winner_2016").text("Democrat");
+            } else if(total_blue_2016 < total_red_2016) {
+                $("#predicted_winner_2016").text("Republican");
+            } else {
+                $("#predicted_winner_2016").text("Tie!");
+            }
+
+            let total_votes = format_int(state_dict["total_votes"]);
+            let total_blue = format_int(total_blue_orig);
+            let total_red = format_int(total_red_orig);
+            let total_other = format_int(total_other_orig);
+
+            if(total_blue_orig > total_red_orig) {
+                $("#predicted_winner").text("Democrat");
+            } else if(total_blue_orig < total_red_orig) {
+                $("#predicted_winner").text("Republican");
+            } else {
+                $("#predicted_winner").text("Tie!");
+            }
+
+            $("#total_red").text(total_red);
+            $("#total_blue").text(total_blue);
+            $("#total_other").text(total_other);
+            $("#total_votes").text(total_votes);
+
+            console.log("ml_type " + ml_type);
+            let table_votes = "<table>";
+            table_votes += "<thead><tr><th>County</th><th>Predict_Blue</th><th>Predict_Red</th><th>Predict_Other</th><th>Blue %</th><th>Red %</th><th>Other %</th><th>Total_Votes_2016</th><th>Blue Votes</th><th>Red Votes</th><th>Other Votes</th></tr></thead>";
+            for (let i = 0; i < stats.length; i++) {
+                let stat = stats[i];
+
+                let predict_blue_votes = stat["predict_blue_votes"];
+                let predict_red_votes = stat["predict_red_votes"];
+                let predict_other_votes = stat["predict_other_votes"];
+                let predict_blue_votes_percent = stat["predict_blue_votes_percent"];
+                let predict_red_votes_percent = stat["predict_red_votes_percent"];
+                let predict_other_votes_percent = stat["predict_other_votes_percent"];
+                let total_votes_2016 = stat["total_votes_2016"];
+                let county = stat["county"];
+
+                let predict_blue_total_votes = stat["predict_blue_total_votes"];
+                let predict_red_total_votes = stat["predict_red_total_votes"];
+                let predict_other_total_votes = stat["predict_other_total_votes"];
+
+                let tr_row = add_row_to_table(county, predict_blue_votes, predict_red_votes, predict_other_votes, predict_blue_votes_percent, predict_red_votes_percent, predict_other_votes_percent, total_votes_2016, predict_blue_total_votes, predict_red_total_votes, predict_other_total_votes);
+                table_votes += tr_row;
+            }
+
+            table_votes += "</table>";
+            $('#votes_table_div').append(table_votes);
+        },
+        error: function (request, status, error) {
+            console.log("fail");
+            alert(request.responseText);
+        }
+    });
+}
+
 $(document).ready(function () {
     $("#submitBtn").click(function () {
         //Get mltype from the dropdown
         let ml_type = $("#mlType").val();
         //Pass in the ML type to the GET URL
         let ml_url = "/votes/" + ml_type;
-        //Ajax call
-        $.ajax({
-            type: "GET", url: ml_url,
-            success: function (data, text) {
-                clear_stats();
 
-                console.log("success");
-                console.log(data);
+        if (ml_type === "Summary") {
+            summary_call(ml_url);
+        } else {
+            ml_call(ml_url);
+        }
 
-                //Get elements from data
-                let ml_type = data["state"];
-                let state_dict = data["state_dict"];
-                let stats = state_dict["stats"];
-
-                let total_blue_orig = state_dict["total_blue"];
-                let total_red_orig = state_dict["total_red"];
-                let total_other_orig = state_dict["total_other"];
-
-                let total_blue_2016 = state_dict["total_blue_2016"];
-                let total_red_2016 = state_dict["total_red_2016"];
-                let total_other_2016 = state_dict["total_other_2016"];
-
-                $("#total_blue_2016").text(format_int(total_blue_2016));
-                $("#total_red_2016").text(format_int(total_red_2016));
-                $("#total_other_2016").text(format_int(total_other_2016));
-                if(total_blue_2016 > total_red_2016) {
-                    $("#predicted_winner_2016").text("Democrat");
-                } else if(total_blue_2016 < total_red_2016) {
-                    $("#predicted_winner_2016").text("Republican");
-                } else {
-                    $("#predicted_winner_2016").text("Tie!");
-                }
-
-                let total_votes = format_int(state_dict["total_votes"]);
-                let total_blue = format_int(total_blue_orig);
-                let total_red = format_int(total_red_orig);
-                let total_other = format_int(total_other_orig);
-
-                if(total_blue_orig > total_red_orig) {
-                    $("#predicted_winner").text("Democrat");
-                } else if(total_blue_orig < total_red_orig) {
-                    $("#predicted_winner").text("Republican");
-                } else {
-                    $("#predicted_winner").text("Tie!");
-                }
-
-                $("#total_red").text(total_red);
-                $("#total_blue").text(total_blue);
-                $("#total_other").text(total_other);
-                $("#total_votes").text(total_votes);
-
-                console.log("ml_type " + ml_type);
-                let table_votes = "<table>";
-                table_votes += "<thead><tr><th>County</th><th>Predict_Blue</th><th>Predict_Red</th><th>Predict_Other</th><th>Blue %</th><th>Red %</th><th>Other %</th><th>Total_Votes_2016</th><th>Blue Votes</th><th>Red Votes</th><th>Other Votes</th></tr></thead>";
-                for (let i = 0; i < stats.length; i++) {
-                    let stat = stats[i];
-
-                    let predict_blue_votes = stat["predict_blue_votes"];
-                    let predict_red_votes = stat["predict_red_votes"];
-                    let predict_other_votes = stat["predict_other_votes"];
-                    let predict_blue_votes_percent = stat["predict_blue_votes_percent"];
-                    let predict_red_votes_percent = stat["predict_red_votes_percent"];
-                    let predict_other_votes_percent = stat["predict_other_votes_percent"];
-                    let total_votes_2016 = stat["total_votes_2016"];
-                    let county = stat["county"];
-
-                    let predict_blue_total_votes = stat["predict_blue_total_votes"];
-                    let predict_red_total_votes = stat["predict_red_total_votes"];
-                    let predict_other_total_votes = stat["predict_other_total_votes"];
-
-                    let tr_row = add_row_to_table(county, predict_blue_votes, predict_red_votes, predict_other_votes, predict_blue_votes_percent, predict_red_votes_percent, predict_other_votes_percent, total_votes_2016, predict_blue_total_votes, predict_red_total_votes, predict_other_total_votes);
-                    table_votes += tr_row;
-                }
-
-
-
-                table_votes += "</table>";
-                $('#votes_table_div').append(table_votes);
-            },
-            error: function (request, status, error) {
-                console.log("fail");
-                alert(request.responseText);
-            }
-        });
         return false;
     });
 });
