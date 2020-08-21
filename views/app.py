@@ -46,7 +46,8 @@ SWING_STATES = ["Summary", "AZ", "MI", "FL", "NC", "PA", "WI"]
 
 @app.route("/")
 def home():
-    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_RF, ML_TYPE_DT, ML_TYPE_US, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
+    create_pred_table()
+    ml_types = ['', ML_TYPE_LR, ML_TYPE_RF, ML_TYPE_DT, ML_TYPE_US, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
@@ -184,6 +185,9 @@ def ml_type(ml_type=None):
     })
 
 def query_res_lr_sql():
+    return get_file_paths("./static/img/linear_regression/")
+
+def query_res_lr_sql2():
     print("query_res_lr_sql")
 
     params_str = "*"
@@ -274,7 +278,6 @@ def insert_pred_sql(total_blue, total_red, total_other, total_votes, total_blue_
 
 def query_summary_sql():
     print("query_summary_sql")
-
     params_str = "*"
     query_str = f"SELECT {params_str} FROM {TABLE_PRED_VOTES};"
 

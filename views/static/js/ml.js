@@ -38,10 +38,10 @@ function handle_lr_response(results_div, stat, file_dir, i){
 
     let state_str = "State=" + state + "<br>";
     let sml_param_str = "SML Param=" + sml_param + "<br>";
-    let r2_score_str = "R2 Score=" + r2_score + "<br>";
+    //let r2_score_str = "R2 Score=" + r2_score + "<br>";
     $('<span />').html(state_str).appendTo(results_div);
     $('<span />').html(sml_param_str).appendTo(results_div);
-    $('<span />').html(r2_score_str).appendTo(results_div);
+    //$('<span />').html(r2_score_str).appendTo(results_div);
 
     let img_id = 'img'+i;
 
@@ -53,6 +53,7 @@ function handle_lr_response(results_div, stat, file_dir, i){
 function handle_stats_filename_response(stat, results_div, i){
     let img_id = 'img'+i;
     let file_path = stat["file_path"];
+    console.log(file_path);
     append_img(file_path, results_div, img_id);
 }
 
@@ -148,7 +149,8 @@ $(document).ready(function () {
                     let file_dir = "./static/img/" + model_dir;
                     
                     if(ml_type == ML_TYPE_LR) {
-                        handle_lr_response(results_div, stat, file_dir, i);
+                        //handle_lr_response(results_div, stat, file_dir, i);
+                        handle_stats_votes_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_LOG) {
                         handle_log_response(results_div, stat, file_dir, i);
                     } else if(ml_type == ML_TYPE_RF) {
