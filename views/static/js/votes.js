@@ -1,3 +1,13 @@
+//Number of electoral votes per state
+var STATE_ELECTORAL_VOTES = {
+    "AZ": 11,
+    "FL": 29,
+    "NC": 15,
+    "PA": 20,
+    "WI": 10,
+    "MI": 16
+};
+
 function append_span(results_div, span_id, str){
     $('<span />').html(str).appendTo(results_div);
 }
@@ -100,14 +110,6 @@ function add_row_to_table(county, predict_blue_votes, predict_red_votes, predict
     return tr_row;
 }
 
-var STATE_ELECTORAL_VOTES = {
-    "AZ": 11,
-    "FL": 29,
-    "NC": 15,
-    "PA": 20,
-    "WI": 10,
-    "MI": 16
-};
 function add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016, electoral_votes) {
     let color_str = "";
     if (total_blue > total_red) {
@@ -210,6 +212,8 @@ function handle_summary_response(data) {
     let stats = data["stats"];
     let total_electoral_red = 0;
     let total_electoral_blue = 0;
+    let red_states = 0;
+    let blue_states = 0;
     for (let i = 0; i < stats.length; i++) {
         let stat = stats[i];
         let total_blue = stat["total_blue"];
@@ -224,8 +228,10 @@ function handle_summary_response(data) {
         let electoral_votes = STATE_ELECTORAL_VOTES[state]
         if(total_blue > total_red) {
             total_electoral_blue += electoral_votes;
+            blue_states += 1;
         } else {
             total_electoral_red += electoral_votes;
+            red_states += 1;
         }
 
         let tr_row = add_summary_row_to_table(state, total_blue, total_red, total_other, total_votes, total_red_2016, total_blue_2016, total_other_2016, electoral_votes);
@@ -236,11 +242,15 @@ function handle_summary_response(data) {
 
     $('#votes_table_div').append(table_votes);
 
-    let red_str = total_electoral_red.toString();
-    let blue_str = total_electoral_blue.toString();
+    let red_electoral_str = total_electoral_red.toString();
+    let blue_electoral_str = total_electoral_blue.toString();
+    let red_str = red_states.toString();
+    let blue_str = blue_states.toString();
 
-    $("#predicted_winner_2016").text(red_str);
-    $("#predicted_winner").text(blue_str);
+    $("#red_states").text(red_str);
+    $("#blue_states").text(blue_str);
+    $("#red_elec_votes").text(red_electoral_str);
+    $("#blue_elec_votes").text(blue_electoral_str);
 }
 
 function summary_call(ml_url) {
@@ -348,6 +358,9 @@ function ml_call(ml_url) {
 }
 
 $(document).ready(function () {
+    $('#states_summary').hide();
+    $('#votes_summary').hide();
+
     $("#submitBtn").click(function () {
         //Get mltype from the dropdown
         let ml_type = $("#mlType").val();
@@ -355,8 +368,12 @@ $(document).ready(function () {
         let ml_url = "/votes/" + ml_type;
 
         if (ml_type === "Summary") {
+            $('#states_summary').show();
+            $('#votes_summary').hide();
             summary_call(ml_url);
         } else {
+            $('#states_summary').hide();
+            $('#votes_summary').show();
             ml_call(ml_url);
         }
 

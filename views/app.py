@@ -23,9 +23,9 @@ engine = create_engine(postgres_url)
 
 ML_TYPE_SUMMARY = "Summary"
 ML_TYPE_LR = "Linear_Regression"
-ML_TYPE_VOTES = "Votes"
 ML_TYPE_LOG = "Logistic_Regression"
 ML_TYPE_RF = "Random_Forest"
+ML_TYPE_DT = "Decision_Tree"
 ML_TYPE_US = "Unsupervised"
 ML_TYPE_STATS_COUNTIES = "Stats_Counties"
 ML_TYPE_STATS_DONATIONS = "Stats_Donations"
@@ -46,7 +46,7 @@ SWING_STATES = ["Summary", "AZ", "MI", "FL", "NC", "PA", "WI"]
 
 @app.route("/")
 def home():
-    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_RF, ML_TYPE_US, ML_TYPE_VOTES, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
+    ml_types = ['', ML_TYPE_LR, ML_TYPE_LOG, ML_TYPE_RF, ML_TYPE_DT, ML_TYPE_US, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
         ml_types=ml_types
@@ -68,9 +68,9 @@ def create_pred_table():
     meta.create_all(engine)
 
 def get_res_votes(state):
-    print(f"get_res_votes {state}")
+    print(f"get_res_rf_votes {state}")
 
-    table_name = f"res_votes_{state.lower()}"
+    table_name = f"res_votes_rf_{state.lower()}"
     params_str = "*"
     query_str = f'SELECT {params_str} FROM "{table_name}";'
 
@@ -167,6 +167,8 @@ def ml_type(ml_type=None):
         stats = query_res_log_sql()
     elif ml_type == ML_TYPE_RF:
         stats = query_res_rf_sql()
+    elif ml_type == ML_TYPE_DT:
+        stats = query_res_dt_sql()
     elif ml_type == ML_TYPE_US:
         stats = query_res_us_sql()
     elif ml_type == ML_TYPE_STATS_DONATIONS:
@@ -175,8 +177,6 @@ def ml_type(ml_type=None):
         stats = query_res_stats_votes_sql()
     elif ml_type == ML_TYPE_STATS_COUNTIES:
         stats = query_res_counties_sql()
-    elif ml_type == ML_TYPE_VOTES:
-        stats = query_res_votes_sql()
 
     return jsonify({
         "ml_type": ml_type,
@@ -298,8 +298,12 @@ def query_summary_sql():
 
     return stats
 
+def query_res_dt_sql():
+    return get_file_paths("./static/img/decision_tree/")
+
 def query_res_rf_sql():
-    return query_log_sql(TABLE_RES_RF)
+    #return query_log_sql(TABLE_RES_RF)
+    return get_file_paths("./static/img/random_forest/")
 
 def query_res_log_sql():
     return query_log_sql(TABLE_RES_LOG)

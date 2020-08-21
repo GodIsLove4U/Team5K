@@ -1,16 +1,16 @@
 const ML_TYPE_LR = "Linear_Regression";
 const ML_TYPE_LOG = "Logistic_Regression";
 const ML_TYPE_RF = "Random_Forest";
+const ML_TYPE_DT = "Decision_Tree";
 const ML_TYPE_US = "Unsupervised";
-const ML_TYPE_VOTES = "Votes";
 const ML_TYPE_COUNTY = "Stats_Counties";
 const ML_TYPE_STATS_DONATIONS = "Stats_Donations";
 const ML_TYPE_STATS_VOTES = "Stats_Votes";
 
 var mlType_dir_dict = {
     "Linear_Regression": "linear_regression",
-    "Votes": "votes",
     "Random_Forest": "random_forest",
+    "Decision_Tree": "decision_tree",
     "Logistic_Regression": "logistic_regression",
     "Unsupervised": "unsupervised_ml",
     "Stats_Counties": "county_cluster",
@@ -50,13 +50,13 @@ function handle_lr_response(results_div, stat, file_dir, i){
     append_img(file_path, results_div, img_id);
 }
 
-function handle_stats_filename_response2(stat, results_div, i){
+function handle_stats_filename_response(stat, results_div, i){
     let img_id = 'img'+i;
     let file_path = stat["file_path"];
     append_img(file_path, results_div, img_id);
 }
 
-function handle_stats_filename_response(stat, results_div, i){
+function handle_stats_filename_response2(stat, results_div, i){
     let img_id = 'img'+i;
     let span_id = 'span'+i;
 
@@ -152,9 +152,13 @@ $(document).ready(function () {
                     } else if(ml_type == ML_TYPE_LOG) {
                         handle_log_response(results_div, stat, file_dir, i);
                     } else if(ml_type == ML_TYPE_RF) {
-                        handle_log_response(results_div, stat, file_dir, i);
+                        //handle_log_response(results_div, stat, file_dir, i);
+                        handle_stats_votes_response(stat, results_div, i);
+                    } else if(ml_type == ML_TYPE_DT) {
+                        handle_stats_votes_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_US) {
-                        handle_us_response(stat, results_div, i);
+                        //handle_us_response(stat, results_div, i);
+                        handle_stats_votes_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_STATS_DONATIONS) {
                         handle_stats_don_response(stat, results_div, i);
                     } else if(ml_type == ML_TYPE_STATS_VOTES) {

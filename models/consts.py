@@ -41,6 +41,9 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
 TABLE_RES_RF = "res_rf"
+TABLE_RES_VOTES_RF = "res_votes_rf"
+TABLE_RES_VOTES_DT = "res_votes_dt"
+
 TABLE_RES_COUNTIES = "res_counties"
 TABLE_RES_STATS_DONATIONS = "res_stats_donations"
 TABLE_RES_STATS_VOTES = "res_stats_votes"
@@ -92,6 +95,7 @@ def select_columns(df, column_names):
 def label_enc(df):
     obj_list = df.select_dtypes(include = "object").columns
     for feat in obj_list:
+        print(feat)
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df
 
