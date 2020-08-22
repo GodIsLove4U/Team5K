@@ -32,6 +32,7 @@ ELECTION_INTERVAL = 4
 MAJOR_PARTIES = ["democrat", "republican", "other"]
 #List of swing states to run the analysis on
 SWING_STATES = ["AZ", "MI", "FL", "NC", "PA", "WI"]
+
 #SQL Table Names
 TABLE_AGG_DONORS = "agg_county_donors"
 TABLE_AGG_VOTES = "agg_county_votes"
@@ -40,7 +41,12 @@ TABLE_SIX_STATE_DONATIONS = "six_state_donations"
 TABLE_RES_LR = "res_lr"
 TABLE_RES_LOG = "res_log"
 TABLE_RES_RF = "res_rf"
-TABLE_RES_SVC = "res_svc"
+TABLE_RES_VOTES_RF = "res_votes_rf"
+TABLE_RES_VOTES_DT = "res_votes_dt"
+
+TABLE_RES_COUNTIES = "res_counties"
+TABLE_RES_STATS_DONATIONS = "res_stats_donations"
+TABLE_RES_STATS_VOTES = "res_stats_votes"
 
 MODEL_TYPE_LOG = "log"
 MODEL_TYPE_RF = "rf"
@@ -89,6 +95,7 @@ def select_columns(df, column_names):
 def label_enc(df):
     obj_list = df.select_dtypes(include = "object").columns
     for feat in obj_list:
+        print(feat)
         df[feat] = le.fit_transform(df[feat].astype(str))
     return df
 
@@ -119,6 +126,7 @@ def merge_cmtid_party(donor_df):
         "CIT": party_democrat,
         "CMP": party_democrat,
         "COM": party_democrat,
+        "D": party_democrat,
         "D/C": party_democrat,
         'DCG': party_democrat,
         "DEM": party_democrat,
@@ -169,6 +177,7 @@ def merge_cmtid_party(donor_df):
         "IAP": party_repub,
         "NDP": party_repub,
         "NJC": party_repub,
+        "R": party_repub,
         "RTL": party_repub,
         "TEA": party_repub,
         "UST": party_repub,
@@ -224,6 +233,11 @@ def merge_cmtid_party(donor_df):
     cmte_party_map.update(cmte_blue_map)
     cmte_party_map.update(cmte_red_map)
     cmte_party_map.update(cmte_other_map)
+    #Uppercase the column so it properly maps
+    #Drop null values of the committee code
+    donor_df = donor_df.dropna(subset=['CMTE_PTY_AFFILIATION'])
+    #Set the code to uppercase
+    donor_df['CMTE_PTY_AFFILIATION'] = donor_df['CMTE_PTY_AFFILIATION'].str.upper()
 
     #Map from party code to dem/rep and have other party as default
     donor_df["party"] = donor_df["CMTE_PTY_AFFILIATION"].map(cmte_party_map).fillna(party_not_found).astype(str)
