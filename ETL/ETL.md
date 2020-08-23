@@ -22,9 +22,9 @@ This function was called for each year.  Calls were parsed into multiple cells t
 
 ## Datasets
 
-FEC Data was loaded based upon master
-Campaign_full_load - Loads all donation data from 2000 onward
-Committee_Full load - Loads all committee master data
-Candidate - Loads all data from the Candidate master
-Education_and_Unemployment_Metrics - Loads valuable census data to help do County level analysis
-Health_and_Postal_Code_loading - Loads county-level health metrics and the table to do the Postal Code to county lookup
+FEC Data was loaded based upon master<BR>
+Campaign_full_load - Loads all donation data from 2000 onward<BR>
+Committee_Full load - Loads all committee master data<BR>
+Candidate - Loads all data from the Candidate master<BR>
+Education_and_Unemployment_Metrics - Loads valuable census data to help do County level analysis<BR>
+Health_and_Postal_Code_loading - Loads county-level health metrics and the table to do the Postal Code to county lookup<BR>
