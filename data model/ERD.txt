@@ -52,7 +52,7 @@ donations
 "EMPLOYER" text
 "OCCUPATION" text
 "TRANSACTION_DT" text
-"TRANSACTION_AMT" integer,
+"TRANSACTION_AMT" integer
 "OTHER_ID" text
 "TRAN_ID" text
 "FILE_NUM" text
@@ -112,7 +112,7 @@ education
 
 postal_codes
 --
-zip integer, 
+zip integer 
 county text
 state text
 stcountyfp integer 
@@ -120,14 +120,14 @@ classfp text
 
 unemployment
 --
-fips integer, FK >- postal_codes.stcountyfp
+fips integer FK >- postal_codes.stcountyfp
 state text
 county text
-num_deaths integer,
+num_deaths integer
 years_of_potential_life_lost_rate double
 "95percent_ci_low" double
 "95percent_ci_high" double
-quartile integer,
+quartile integer
 ypll_rate_aian double
 ypll_rate_aian_95percent_ci_low double
 ypll_rate_aian_95percent_ci_high double
@@ -146,22 +146,22 @@ ypll_rate_white_95percent_ci_high double
 percent_fair_or_poor_health double
 "95percent_ci_low_2" double
 "95percent_ci_high_2" double
-quartile_2 integer,
+quartile_2 integer
 average_number_of_physically_unhealthy_days double
 "95percent_ci_low_3" double
 "95percent_ci_high_3" double
-quartile_3 integer,
+quartile_3 integer
 average_number_of_mentally_unhealthy_days double
 "95percent_ci_low_4" double
 "95percent_ci_high_4" double
-quartile_4 integer,
+quartile_4 integer
 unreliable text
 percent_low_birthweight double
 "95percent_ci_low_5" double
 "95percent_ci_high_5" double
-quartile_5 integer,
+quartile_5 integer
 percent_lbw_aian double
-percent_lbw_aian_95percent_ci_low integer,
+percent_lbw_aian_95percent_ci_low integer
 percent_lbw_aian_95percent_ci_high double
 percent_lbw_asian double
 percent_lbw_asian_95percent_ci_low double
@@ -178,36 +178,36 @@ percent_lbw_white_95percent_ci_high double
 percent_smokers double
 "95percent_ci_low_6" double
 "95percent_ci_high_6" double
-quartile_6 integer,
+quartile_6 integer
 percent_adults_with_obesity double
 "95percent_ci_low_7" double
 "95percent_ci_high_7" double
-quartile_7 integer,
+quartile_7 integer
 food_environment_index double
-quartile_8 integer,
+quartile_8 integer
 percent_physically_inactive double
 "95percent_ci_low_8" double
 "95percent_ci_high_8" double
-quartile_9 integer,
+quartile_9 integer
 percent_with_access_to_exercise_opportunities double
-quartile_10 integer,
+quartile_10 integer
 percent_excessive_drinking double
 "95percent_ci_low_9" double
 "95percent_ci_high_9" double
-quartile_11 integer,
-num_alcohol_impaired_driving_deaths integer,
-num_driving_deaths integer,
+quartile_11 integer
+num_alcohol_impaired_driving_deaths integer
+num_driving_deaths integer
 percent_driving_deaths_with_alcohol_involvement double
 "95percent_ci_low_10" double
 "95percent_ci_high_10" double
-quartile_12 integer,
-num_chlamydia_cases integer,
+quartile_12 integer
+num_chlamydia_cases integer
 chlamydia_rate double
-quartile_13 integer,
+quartile_13 integer
 teen_birth_rate double
 "95percent_ci_low_11" double
 "95percent_ci_high_11" double
-quartile_14 integer,
+quartile_14 integer
 teen_birth_rate_aian double
 teen_birth_rate_aian_95percent_ci_low double
 teen_birth_rate_aian_95percent_ci_high double
@@ -223,87 +223,87 @@ teen_birth_rate_hispanic_95percent_ci_high double
 teen_birth_rate_white double
 teen_birth_rate_white_95percent_ci_low double
 teen_birth_rate_white_95percent_ci_high double
-num_uninsured integer,
+num_uninsured integer
 percent_uninsured double
 "95percent_ci_low_12" double
 "95percent_ci_high_12" double
-quartile_15 integer,
-num_primary_care_physicians integer,
+quartile_15 integer
+num_primary_care_physicians integer
 primary_care_physicians_rate double
 primary_care_physicians_ratio text
-quartile_16 integer,
-num_dentists integer,
+quartile_16 integer
+num_dentists integer
 dentist_rate double
 dentist_ratio text
-quartile_17 integer,
-num_mental_health_providers integer,
+quartile_17 integer
+num_mental_health_providers integer
 mental_health_provider_rate double
 mental_health_provider_ratio text
-quartile_18 integer,
-preventable_hospitalization_rate integer,
-quartile_19 integer,
-preventable_hosp_rate_aian integer,
-preventable_hosp_rate_asian integer,
-preventable_hosp_rate_black integer,
-preventable_hosp_rate_hispanic integer,
-preventable_hosp_rate_white integer,
-percent_with_annual_mammogram integer,
-quartile_20 integer,
-percent_screened_aian integer,
-percent_screened_asian integer,
-percent_screened_black integer,
-percent_screened_hispanic integer,
-percent_screened_white integer,
-percent_vaccinated integer,
-quartile_21 integer,
-percent_vaccinated_aian integer,
-percent_vaccinated_asian integer,
-percent_vaccinated_black integer,
-percent_vaccinated_hispanic integer,
-percent_vaccinated_white integer,
-cohort_size integer,
+quartile_18 integer
+preventable_hospitalization_rate integer
+quartile_19 integer
+preventable_hosp_rate_aian integer
+preventable_hosp_rate_asian integer
+preventable_hosp_rate_black integer
+preventable_hosp_rate_hispanic integer
+preventable_hosp_rate_white integer
+percent_with_annual_mammogram integer
+quartile_20 integer
+percent_screened_aian integer
+percent_screened_asian integer
+percent_screened_black integer
+percent_screened_hispanic integer
+percent_screened_white integer
+percent_vaccinated integer
+quartile_21 integer
+percent_vaccinated_aian integer
+percent_vaccinated_asian integer
+percent_vaccinated_black integer
+percent_vaccinated_hispanic integer
+percent_vaccinated_white integer
+cohort_size integer
 high_school_graduation_rate double
-quartile_22 integer,
-num_some_college integer,
-population integer,
+quartile_22 integer
+num_some_college integer
+population integer
 percent_some_college double
 "95percent_ci_low_13" double
 "95percent_ci_high_13" double
-quartile_23 integer,
-num_unemployed integer,
-labor_force integer,
+quartile_23 integer
+num_unemployed integer
+labor_force integer
 percent_unemployed double
-quartile_24 integer,
+quartile_24 integer
 percent_children_in_poverty double
 "95percent_ci_low_14" double
 "95percent_ci_high_14" double
-quartile_25 integer,
+quartile_25 integer
 percent_children_in_poverty_aian double
 percent_children_in_poverty_asian double
 percent_children_in_poverty_black double
 percent_children_in_poverty_hispanic double
 percent_children_in_poverty_white double
-"80th_percentile_income" integer,
-"20th_percentile_income" integer,
+"80th_percentile_income" integer
+"20th_percentile_income" integer
 income_ratio double
-quartile_26 integer,
-num_single_parent_households integer,
-num_households integer,
+quartile_26 integer
+num_single_parent_households integer
+num_households integer
 percent_single_parent_households double
 "95percent_ci_low_15" double
 "95percent_ci_high_15" double
-quartile_27 integer,
-num_associations integer,
+quartile_27 integer
+num_associations integer
 social_association_rate double
-quartile_28 integer,
+quartile_28 integer
 annual_average_violent_crimes double
 violent_crime_rate double
-quartile_29 integer,
-num_injury_deaths integer,
+quartile_29 integer
+num_injury_deaths integer
 injury_death_rate double
 "95percent_ci_low_16" double
 "95percent_ci_high_16" double
-quartile_30 integer,
+quartile_30 integer
 injury_death_rate_aian double
 injury_death_rate_aian_95percent_ci_low double
 injury_death_rate_aian_95percent_ci_high double
@@ -320,9 +320,9 @@ injury_death_rate_white double
 injury_death_rate_white_95percent_ci_low double
 injury_death_rate_white_95percent_ci_high double
 average_daily_pm2_5 double
-quartile_31 integer,
+quartile_31 integer
 presence_of_water_violation text
-quartile_32 integer,
+quartile_32 integer
 percent_severe_housing_problems double
 "95percent_ci_low_17" double
 "95percent_ci_high_17" double
@@ -335,11 +335,11 @@ overcrowding_95percent_ci_high double
 inadequate_facilities double
 inadequate_facilities_95percent_ci_low double
 inadequate_facilities_95percent_ci_high double
-quartile_33 integer,
+quartile_33 integer
 percent_drive_alone_to_work double
 "95percent_ci_low_18" double
 "95percent_ci_high_18" double
-quartile_34 integer,
+quartile_34 integer
 percent_drive_alone_aian double
 percent_drive_alone_aian_95percent_ci_low double
 percent_drive_alone_aian_95percent_ci_high double
@@ -355,11 +355,11 @@ percent_drive_alone_hispanic_95percent_ci_high double
 percent_drive_alone_white double
 percent_drive_alone_white_95percent_ci_low double
 percent_drive_alone_white_95percent_ci_high double
-num_workers_who_drive_alone integer,
+num_workers_who_drive_alone integer
 percent_long_commute_drives_alone double
 "95percent_ci_low_19" double
 "95percent_ci_high_19" double
-quartile_35 integer,
+quartile_35 integer
 life_expectancy double
 "95percent_ci_low_20" double
 "95percent_ci_high_20" double
@@ -378,7 +378,7 @@ life_expectancy_hispanic_95percent_ci_high double
 life_expectancy_white double
 life_expectancy_white_95percent_ci_low double
 life_expectancy_white_95percent_ci_high double
-num_deaths_2 integer,
+num_deaths_2 integer
 age_adjusted_death_rate double
 "95percent_ci_low_21" double
 "95percent_ci_high_21" double
@@ -397,7 +397,7 @@ age_adjusted_mortality_hispanic_95percent_ci_high double
 age_adjusted_mortality_white double
 age_adjusted_mortality_white_95percent_ci_low double
 age_adjusted_mortality_white_95percent_ci_high double
-num_deaths_3 integer,
+num_deaths_3 integer
 child_mortality_rate double
 "95percent_ci_low_22" double
 "95percent_ci_high_22" double
@@ -416,7 +416,7 @@ child_mortality_rate_hispanic_95percent_ci_high double
 child_mortality_rate_white double
 child_mortality_rate_white_95percent_ci_low double
 child_mortality_rate_white_95percent_ci_high double
-num_deaths_4 integer,
+num_deaths_4 integer
 infant_mortality_rate double
 "95percent_ci_low_23" double
 "95percent_ci_high_23" double
@@ -444,13 +444,13 @@ percent_frequent_mental_distress double
 percent_adults_with_diabetes double
 "95percent_ci_low_26" double
 "95percent_ci_high_26" double
-num_hiv_cases integer,
+num_hiv_cases integer
 hiv_prevalence_rate double
-num_food_insecure integer,
+num_food_insecure integer
 percent_food_insecure double
 num_limited_access double
 percent_limited_access_to_healthy_foods double
-num_drug_overdose_deaths integer,
+num_drug_overdose_deaths integer
 drug_overdose_mortality_rate double
 "95percent_ci_low_27" double
 "95percent_ci_high_27" double
@@ -469,7 +469,7 @@ drug_overdose_mortality_rate_hispanic_95percent_ci_high double
 drug_overdose_mortality_rate_white double
 drug_overdose_mortality_rate_white_95percent_ci_low double
 drug_overdose_mortality_rate_white_95percent_ci_high double
-num_motor_vehicle_deaths integer,
+num_motor_vehicle_deaths integer
 motor_vehicle_mortality_rate double
 "95percent_ci_low_28" double
 "95percent_ci_high_28" double
@@ -491,11 +491,11 @@ mv_mortality_rate_white_95percent_ci_high double
 percent_insufficient_sleep double
 "95percent_ci_low_29" double
 "95percent_ci_high_29" double
-num_uninsured_2 integer,
+num_uninsured_2 integer
 percent_uninsured_2 double
 "95percent_ci_low_30" double
 "95percent_ci_high_30" double
-num_uninsured_3 integer,
+num_uninsured_3 integer
 percent_uninsured_3 double
 "95percent_ci_low_31" double
 "95percent_ci_high_31" double
@@ -514,22 +514,22 @@ average_grade_performance_asian_2 double
 average_grade_performance_black_2 double
 average_grade_performance_hispanic_2 double
 average_grade_performance_white_2 double
-median_household_income integer,
+median_household_income integer
 "95percent_ci_low_33" double
 "95percent_ci_high_33" double
-household_income_aian integer,
+household_income_aian integer
 household_income_aian_95percent_ci_low double
 household_income_aian_95percent_ci_high double
-household_income_asian integer,
+household_income_asian integer
 household_income_asian_95percent_ci_low double
 household_income_asian_95percent_ci_high double
-household_income_black integer,
+household_income_black integer
 household_income_black_95percent_ci_low double
 household_income_black_95percent_ci_high double
-household_income_hispanic integer,
+household_income_hispanic integer
 household_income_hispanic_95percent_ci_low double
 household_income_hispanic_95percent_ci_high double
-household_income_white integer,
+household_income_white integer
 household_income_white_95percent_ci_low double
 household_income_white_95percent_ci_high double
 percent_enrolled_in_free_or_reduced_lunch double
@@ -553,7 +553,7 @@ homicide_rate_hispanic_95percent_ci_high double
 homicide_rate_white double
 homicide_rate_white_95percent_ci_low double
 homicide_rate_white_95percent_ci_high double
-num_deaths_5 integer,
+num_deaths_5 integer
 suicide_rate_age_adjusted double
 "95percent_ci_low_35" double
 "95percent_ci_high_35" double
@@ -573,7 +573,7 @@ suicide_rate_hispanic_95percent_ci_high double
 suicide_rate_white double
 suicide_rate_white_95percent_ci_low double
 suicide_rate_white_95percent_ci_high double
-num_firearm_fatalities integer,
+num_firearm_fatalities integer
 firearm_fatalities_rate double
 "95percent_ci_low_36" double
 "95percent_ci_high_36" double
@@ -594,38 +594,38 @@ firearm_fatalities_rate_white_95percent_ci_low double
 firearm_fatalities_rate_white_95percent_ci_high double
 non_petitioned_cases text
 petitioned_cases text
-denominator integer,
+denominator integer
 juvenile_arrest_rate double
 average_traffic_volume_per_meter_of_major_roadways double
-num_homeowners integer,
+num_homeowners integer
 percent_homeowners double
 "95percent_ci_low_37" double
 "95percent_ci_high_37" double
-num_households_with_severe_cost_burden integer,
+num_households_with_severe_cost_burden integer
 percent_severe_housing_cost_burden double
 "95percent_ci_low_38" double
 "95percent_ci_high_38" double
-population_2 integer,
+population_2 integer
 percent_less_than_18_years_of_age double
 percent_65_and_over double
-num_black integer,
+num_black integer
 percent_black double
-num_american_indian_alaska_native integer,
+num_american_indian_alaska_native integer
 percent_american_indian_alaska_native double
-num_asian integer,
+num_asian integer
 percent_asian double
-num_native_hawaiian_other_pacific_islander integer,
+num_native_hawaiian_other_pacific_islander integer
 percent_native_hawaiian_other_pacific_islander double
-num_hispanic integer,
+num_hispanic integer
 percent_hispanic double
-num_non_hispanic_white integer,
+num_non_hispanic_white integer
 percent_non_hispanic_white double
-num_not_proficient_in_english integer,
+num_not_proficient_in_english integer
 percent_not_proficient_in_english double
 "95percent_ci_low_39" double
 "95percent_ci_high_39" double
 percent_female double
-num_rural integer,
+num_rural integer
 percent_rural double
 
 birth_death_rate
@@ -652,7 +652,7 @@ county text
 state text 
 election_year bigint
 
-agg_county_votores
+agg_county_voters
 --
 index bigint
 blue_votes bigint
@@ -669,6 +669,329 @@ election_year bigint
 "PopDen_Rural" double
 winning_party text
 
+classifying_results
+--
+"FIPStxt" bigint
+"POP_COU" bigint
+"AREA_COU" bigint
+"POP_URBAN" bigint
+"POPPCT_URBAN" double
+"AREA_URBAN" bigint
+"AREAPCT_URBAN" double
+"POPDEN_URBAN" double
+"POP_UA" bigint
+"POPPCT_UA" double
+"AREA_UA" bigint
+"AREAPCT_UA" double
+"POPDEN_UA" double
+"POP_UC" bigint
+"POPPCT_UC" double
+"AREA_UC" bigint
+"AREAPCT_UC" double
+"POPDEN_UC" double
+"POP_RURAL" bigint
+"POPPCT_RURAL" double
+"AREA_RURAL" bigint
+"AREAPCT_RURAL" double      
+"POPDEN_RURAL" double
+"Unemployment_rate_2019" double
+"Median_Household_Income_2018" double
+"Employed_2019" double
+"Civilian_labor_force_2019" double
+"PC 1" double
+"PC 2" double
+"PC 3" double
+class integer
 
+pred_votes
+--
+id integer 
+total_blue integer
+total_red integer
+total_other integer
+total_votes integer
+total_blue_2016 integer
+total_red_2016 integer
+total_other_2016 integer
+state character
 
+res_counties
+--
+index integer
+file_name text
+title text 
 
+res_log
+--
+index bigint
+accuracy double 
+recall double 
+precision double 
+f1 double 
+sml_param text 
+state text 
+file_name text
+
+res_lr
+--
+index bigint,
+state text
+sml_param text 
+r2_score double
+file_name text 
+
+res_stats_donations
+--
+index bigint
+file_name text
+title text 
+
+res_votes_dt
+--
+index bigint,
+state text 
+sml_param text 
+r2_score double 
+file_name text 
+
+res_votes_dt_az
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_dt_fl
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_dt_mi
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_dt_nc
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_dt_pa
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_dt_wi
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_lr_az
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_lr_fl
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_lr_mi
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_lr_nc
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_lr_pa
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_lr_wi
+--
+index bigint
+predict_blue_votes double 
+predict_red_votes double
+predict_other_votes double
+predict_blue_votes_percent double 
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text 
+
+res_votes_rf
+--
+index bigint,
+state text 
+sml_param text 
+r2_score double 
+file_name text 
+
+res_votes_rf_az
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_rf_fl
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_rf_mi
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_rf_nc
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_rf_pa
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
+
+res_votes_rf_wi
+--
+index bigint
+predict_blue_votes bigint
+predict_red_votes bigint
+predict_other_votes bigint
+predict_blue_votes_percent double
+predict_red_votes_percent double 
+predict_other_votes_percent double
+total_votes_2016 bigint
+state text 
+county text
