@@ -46,7 +46,6 @@ SWING_STATES = ["Summary", "AZ", "MI", "FL", "NC", "PA", "WI"]
 
 @app.route("/")
 def home():
-    create_pred_table()
     ml_types = ['', ML_TYPE_LR, ML_TYPE_RF, ML_TYPE_DT, ML_TYPE_US, ML_TYPE_STATS_COUNTIES, ML_TYPE_STATS_DONATIONS, ML_TYPE_STATS_VOTES]
     return render_template(
         "index.html",
