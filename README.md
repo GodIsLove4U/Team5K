@@ -1,4 +1,7 @@
 # Team5K
+
+The main contribution of this study is a careful analysis of the predictive power of donations in battleground states in determining presidential election outcomes. By using PostgreSQL, Python, and Tableau, we perform data analysis, visualization, and RandomForest machine learning to predict an evenly split election outcome between 6 battle ground states.
+
 ## Introduction
 * Our goal is to analyze the predictive power of political donations on presidential election outcomes in key battleground states in the United States. We will build predictive models using machine learning to understand how donations to political campaigns inform voting in counties and states. We will also look at times of economic and social crises and how it may impact and shift the parties to which voters choose to donate.
 * We found that this topic could have impactful predictive power in understanding how times of crises can influence the outcomes of presidential elections. The state of the pandemic in the US paired with civil unrest throughout the country pose a dynamic background for the upcoming presidential elections. As active citizens, our group is invested in evaluating how events similar in magnitude have created shifts in political affiliation.
