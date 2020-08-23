@@ -1,3 +1,5 @@
+#Consts is a shared file for the various models to reuse constants and reusable code functions
+
 # Import dependencies
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -114,7 +116,8 @@ def drop_res_rf_tables(engine):
         sql.execute('DROP TABLE IF EXISTS %s'%TABLE_RES_RF, engine)
 
 #Add a new column party to the DF that maps the committee party abbreviation to a major party
-def merge_cmtid_party(donor_df):        
+def merge_cmtid_party(donor_df):
+    #XXX Very important method, this is how we categorize a donation record as blue, red, or other
     #Get the major party strings to map to 
     party_democrat = MAJOR_PARTIES[0]
     party_repub = MAJOR_PARTIES[1]
