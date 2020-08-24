@@ -34,16 +34,16 @@ This repository includes the following:
 
 For our analysis, we use publicly available datasets (FEC, Census Bureau, Kaggle) that evaluate the following features:
 * Voting data and associated socioeconomic events
- * 2000: Dotcom Bubble Burst
- * 2001: 9/11
- * 2006-2008: Housing Bubble
- * 2007-2008: Financial Crisis
- * 2020: COVID19
+  * 2000: Dotcom Bubble Burst
+  * 2001: 9/11
+  * 2006-2008: Housing Bubble
+  * 2007-2008: Financial Crisis
+  * 2020: COVID19
 * Demographics
- * Urban/rural
- * Average age
- * Education
- * County (trends within counties themselves)
+  * Urban/rural
+  * Average age
+  * Education
+  * County (trends within counties themselves)
    * County zipcodes
    * Committee Name, Party Affiliation, Committee ID Table Mapping
    * Zipcode to County Table Mapping
