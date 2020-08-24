@@ -1,6 +1,10 @@
 # Team5K
 
-The main contribution of this study is a careful analysis of the predictive power of donations in battleground states in determining presidential election outcomes. By using PostgreSQL, Python, and Tableau, we perform data analysis, visualization, and RandomForest machine learning to predict an evenly split election outcome between 6 battle ground states.
+The main contribution of this study is a careful analysis of the predictive power of donations in battleground states in determining presidential election outcomes. Through a granular analysis of donations data by county in each swing state, and by using PostgreSQL, Python, and Tableau to do so, we perform data analysis, visualization, and RandomForest machine learning to predict that:
+* Florida, Pennsylvania and Wisconsin will vote “blue” in this election cycle.
+* Arizona, North Carolina, and Michigan will vote “red” in this election cycle.
+* Red votes in swing states will make up 42 electoral college votes.
+* Blue votes in swing states will male up 59 electoral college votes.
 
 ## Introduction
 Our main goal is to analyze the predictive power of political donations on presidential election outcomes in key battleground states in the United States. We will build predictive models using machine learning to understand how donations to political campaigns inform voting in counties and states. 
