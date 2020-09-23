@@ -86,8 +86,8 @@ def create_file_name(model_type, sml_param, state):
     file_name = f"{model_type}_{sml_param}_{state}.png"
     return file_name
 
-def create_title(model_type, sml_param, score_str):
-    title = f"{model_type}-{sml_param}:{score_str}"
+def create_title(state, model_type, sml_param, score_str):
+    title = f"{state}-{model_type}-{sml_param}:{score_str}"
     return title
 
 def select_columns(df, column_names):
